@@ -38,7 +38,7 @@ const page = () => {
 
   return (
     <>
-      <div className="overflow-auto no-scrollbar h-screen flex flex-col bg-gradient-to-t from-orange-300 from-30%">
+      <div className="overflow-auto no-scrollbar h-screen flex flex-col bg-gradient-to-t from-blue-200 from-30%">
         <div className="my-10 mx-10">
           <h1 className="text-5xl p-2 font-bold">Customers</h1>
           <div className="flex justify-center gap-20 my-5">

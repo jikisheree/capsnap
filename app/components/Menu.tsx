@@ -6,17 +6,14 @@ const Menu = ({ menu = [] }: { menu: MenuProps[] }) => {
   return (
     <div className="grid grid-cols-2 gap-2">
       {menu.map((item: MenuProps, index: number) => (
-        <Link key={index} href={item.path}>
-          <div
-            key={index}
-            className="card w-32 bg-gradient-to-b from-orange-300 to-yellow-200 from-30% hover:to-amber-500"
-          >
-            <div className="card-body">
+        <div key={index} className="card w-28">
+          <div className="card-body">
+            <Link key={index} href={item.path}>
               {item.icon}
-              {item.title}
-            </div>
+            </Link>
+            {item.title}
           </div>
-        </Link>
+        </div>
       ))}
     </div>
   );

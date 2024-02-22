@@ -65,7 +65,7 @@ export default function CateCard({
       {categories.map((item: CateProps, index: number) => (
         <div
           key={index}
-          className="collapse collapse-arrow card lg:card-side bg-base-100 shadow-xl"
+          className="collapse collapse-arrow card lg:card-side shadow-xl"
         >
           <input type="radio" name="my-accordion-1" className="peer" />
           <div className="flex collapse-title">
@@ -85,7 +85,7 @@ export default function CateCard({
               <h2 className="card-title">Remains: {item.stock} </h2>
             </div>
           </div>
-          <div className="collapse-content bg-primary text-primary-content peer-checked:bg-warning peer-checked:text-warning-content">
+          <div className="collapse-content">
             {product && (
               <ProductCard product={filterByCategory(item.category_id)} />
             )}

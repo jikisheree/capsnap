@@ -17,7 +17,7 @@ export default async function Index() {
 
   return (
     <>
-      <div className="overflow-auto no-scrollbar h-screen flex flex-col bg-gradient-to-t from-orange-300 from-30%">
+      <div className="overflow-auto no-scrollbar h-screen flex flex-col">
         <div className="my-10 mx-10">
           <div className="flex">
             <img

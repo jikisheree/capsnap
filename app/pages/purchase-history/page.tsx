@@ -30,7 +30,7 @@ export default async function () {
 
   return (
     <>
-      <div className="overflow-auto no-scrollbar h-screen flex flex-col bg-gradient-to-t from-orange-300 from-30%">
+      <div className="overflow-auto no-scrollbar h-screen flex flex-col bg-gradient-to-t from-blue-200 from-30%">
         <div className="my-10 mx-10">
           <h1 className="p-2 text-5xl bg-clip-text font-bold">
             Purchase History

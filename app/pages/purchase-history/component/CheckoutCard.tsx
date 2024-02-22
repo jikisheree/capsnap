@@ -6,9 +6,28 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
 
 const CheckoutCard = ({ checkoutList = [] }: { checkoutList: any[] }) => {
+  checkoutList.sort((a, b) => {
+    const dateA = new Date(a.checkout_at).getTime();
+    const dateB = new Date(b.checkout_at).getTime();
+
+    // Compare dates for sorting
+    return dateA - dateB;
+  });
   const [posts, setPosts] = useState(checkoutList);
   const supabase = createClientComponentClient<any>();
   const router = useRouter();
+
+  const dateFormat = (date: string) => {
+    const dateObject = new Date(date);
+
+    // Format the date using toLocaleString
+    const formattedDateTime = dateObject.toLocaleString();
+
+    // Display the result
+    console.log("Formatted DateTime:", formattedDateTime);
+
+    return formattedDateTime;
+  };
 
   useEffect(() => {
     setPosts(checkoutList);
@@ -50,12 +69,14 @@ const CheckoutCard = ({ checkoutList = [] }: { checkoutList: any[] }) => {
             </div>
             <div className="flex-initial card-body ">
               <h2 className="card-title">Total: {item.total_amount} </h2>
-              <h2 className="card-title">Checkout at: {item.checkout_at} </h2>
+              <h2 className="card-title">
+                Checkout at: {dateFormat(item.checkout_at)}{" "}
+              </h2>
             </div>
           </div>
-          <div className="collapse-content bg-primary text-primary-content peer-checked:bg-warning peer-checked:text-warning-content">
+          <div className="collapse-content bg-primary text-primary-content peer-checked:text-warning-content">
             <div className="mt-3 collapse collapse-plus card lg:card-side bg-white">
-              <div className="flex flex-row justify-center font-bold bg-primary">
+              <div className="flex flex-row justify-center font-bold">
                 <h3 className="pl-7 w-3/4">Product</h3>
                 <h3 className="w-1/4">Price</h3>
                 <h3 className="w-1/4">Unit(s)</h3>
@@ -69,7 +90,7 @@ const CheckoutCard = ({ checkoutList = [] }: { checkoutList: any[] }) => {
                   <div className="w-20">{item.total_product_amount[index]}</div>
                 </div>
               ))}
-              <div className="flex flex-row justify-center font-bold bg-primary">
+              <div className="flex flex-row justify-center font-bold">
                 <h3 className="pl-7 w-3/4">Total</h3>
                 <h3 className="w-1/4"></h3>
                 <h3 className="w-1/4">
