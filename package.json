@@ -11,7 +11,7 @@
   "dependencies": {
     "@supabase/auth-helpers-nextjs": "^0.8.7",
     "@supabase/ssr": "^0.0.10",
-    "@supabase/supabase-js": "^2.39.0",
+    "@supabase/supabase-js": "^2.39.7",
     "apexcharts": "^3.45.0",
     "flowbite": "^2.2.1",
     "next": "14.0.4",

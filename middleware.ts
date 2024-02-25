@@ -1,23 +1,25 @@
 import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs'
 import { NextResponse } from 'next/server'
 import { NextRequest } from 'next/server'
+import { updateSession } from './lib/supabase/middleware';
 
-export async function middleware(req: NextRequest) {
-  const res = NextResponse.next()
+export async function middleware(request: NextRequest) {
+  return await updateSession(request);
+  // const res = NextResponse.next()
 
-  if(req.nextUrl.pathname === '/' || req.nextUrl.pathname === '/auth/signup'){
-    return res
-  }
+  // if(req.nextUrl.pathname === '/' || req.nextUrl.pathname === '/auth/signup'){
+  //   return res
+  // }
 
-  // Create a Supabase client configured to use cookies
-  const supabase = createMiddlewareClient({ req, res })
+  // // Create a Supabase client configured to use cookies
+  // const supabase = createMiddlewareClient({ req, res })
 
-  // Refresh session if expired - required for Server Components
-  const {data: {session}} = await supabase.auth.getSession()
-  if(!session){
-    return NextResponse.rewrite(new URL('/auth/signin', req.url));
-  }
-  return res
+  // // Refresh session if expired - required for Server Components
+  // const {data: {session}} = await supabase.auth.getSession()
+  // if(!session){
+  //   return NextResponse.rewrite(new URL('/auth/signin', req.url));
+  // }
+  // return res
 }
 
 // Ensure the middleware is only called for relevant paths.

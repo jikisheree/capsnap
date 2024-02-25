@@ -1,12 +1,13 @@
-'use server'
+"use server";
 
-import { revalidatePath } from 'next/cache'
-import { redirect } from 'next/navigation'
-
-import  {createSupabaseServerClient} from '@/lib/supabase/supabase-server'
+import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
+import { createSupabaseServerClient } from '@/lib/supabase/supabase-server';
+import { useAppContext } from "../../context/supabase-context";
 
 export async function login(formData: FormData) {
   const supabase = createSupabaseServerClient();
+  //const { setUser } = useAppContext();
 
   // type-casting here for convenience
   // in practice, you should validate your inputs
@@ -15,14 +16,16 @@ export async function login(formData: FormData) {
     password: formData.get('password') as string,
   }
 
-  const { error } = await supabase.auth.signInWithPassword(data)
+  const { data: supabaseData, error } = await supabase.auth.signInWithPassword(data);
 
   if (error) {
-    redirect('/error')
+    console.log("Login Error:", error);
+    redirect('/error');
   }
 
-  revalidatePath('/', 'layout')
-  redirect('/')
+
+  revalidatePath('/home', 'layout');
+  redirect('/home');
 }
 
 export async function signup(formData: FormData) {
@@ -38,9 +41,10 @@ export async function signup(formData: FormData) {
   const { error } = await supabase.auth.signUp(data)
 
   if (error) {
-    redirect('/error')
+    console.log("Sign Up Error:", error);
+    redirect('/error');
   }
 
-  revalidatePath('/', 'layout')
-  redirect('/')
+  revalidatePath('/home', 'layout')
+  redirect('/home')
 }

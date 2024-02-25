@@ -7,10 +7,8 @@ interface props {
 
 const FormCard = ({ signType, children }: props) => {
   return (
-    <main className="h-screen flex items-center justify-center bg-gray-800 p-6">
-      <div className="bg-gray-900 p-8 rounded-lg shadow-md w-2/3 flex">
-        {children}
-      </div>
+    <main className="h-screen flex items-center justify-center p-6 bg-gradient-to-t from-blue-200 from-30%">
+      <div className="p-8 rounded-lg shadow-md w-2/3 flex">{children}</div>
     </main>
   );
 };

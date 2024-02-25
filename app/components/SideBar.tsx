@@ -5,7 +5,6 @@ import Menu from "./Menu";
 import {
   AiFillControl,
   AiFillEdit,
-  AiFillHdd,
   AiFillProfile,
   AiFillDashboard,
   AiOutlineTeam,
@@ -60,7 +59,6 @@ export const menu: MenuProps[] = [
 
 export default function SideBar({ children }: { children: React.ReactNode }) {
   const { user } = useAppContext();
-  console.log(user);
 
   return (
     <>
@@ -88,7 +86,9 @@ export default function SideBar({ children }: { children: React.ReactNode }) {
                 <div className="flex-auto avatar placeholder">
                   <div className="bg-neutral text-neutral-content rounded-full w-12">
                     <span className="text-3xl">
-                      {user?.user_metadata.firstName[0]}
+                      {user?.user_metadata.firstName
+                        ? user.user_metadata.firstName[0]
+                        : undefined}
                     </span>
                   </div>
                 </div>

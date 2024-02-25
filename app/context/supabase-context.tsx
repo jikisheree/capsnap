@@ -1,27 +1,23 @@
 "use client";
 
-import { usePathname } from "next/navigation";
-import {
-  SupabaseClient,
-  User,
-  createClientComponentClient,
-} from "@supabase/auth-helpers-nextjs";
+import { usePathname, useRouter } from "next/navigation";
 import React, { useContext, useEffect, useState } from "react";
 import { createContext } from "react";
 import SideBar from "../components/SideBar";
-import { useRouter } from "next/navigation";
+import { createSupabaseBrowserClient } from "@/lib/supabase/supabase-browser";
+import { SupabaseClient, User } from "@supabase/supabase-js";
 
 interface IAppContext {
-  supabase: SupabaseClient;
+  setUser: (user: User | null) => void;
   user: User | undefined;
-  loading: boolean;
+  handleSignOut: () => Promise<void>;
 }
 
-const AppContext = createContext<any>(undefined);
+const AppContext = createContext<IAppContext | undefined>(undefined);
 
 export function AppWrapper({ children }: { children: React.ReactNode }) {
-  const supabase = createClientComponentClient();
-  const [user, setUser] = useState<User | undefined>(undefined);
+  const supabase = createSupabaseBrowserClient();
+  const [user, setUser] = useState<any>(undefined);
   const [loading, setLoading] = useState<boolean>(true);
   const pathname = usePathname(); // Get the router object from Next.js
   const [error, setError] = useState<string | undefined>(undefined);
@@ -30,12 +26,12 @@ export function AppWrapper({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const fetchCurrentUser = async () => {
       try {
-        const { data }: any = await supabase.auth.getSession();
-        if (data) {
-          console.log(data);
-          console.log(data.session.user);
+        const { data }: any = await supabase.auth.getUser();
+        if (data.user) {
+          console.log("User: ");
+          console.log(data.user);
         }
-        setUser(data.session.user);
+        setUser(data.user);
       } catch (e) {
         console.log(e);
       } finally {
@@ -44,7 +40,7 @@ export function AppWrapper({ children }: { children: React.ReactNode }) {
     };
 
     fetchCurrentUser();
-  }, []);
+  }, [pathname]);
 
   const handleSignOut = async () => {
     try {
@@ -53,14 +49,12 @@ export function AppWrapper({ children }: { children: React.ReactNode }) {
 
       const { error } = await supabase.auth.signOut();
       if (error) return setError("Sorry, impossible to logout.");
-      else {
-        setUser(undefined); // Clear the user from the context or set it to undefined
-        router.push("/unauthenticated");
-      }
     } catch (e: any) {
       throw new Error(e);
     } finally {
       setLoading(false);
+      router.push("/");
+      setUser(undefined); // Clear the user from the context or set it to undefined
     }
   };
 
@@ -71,12 +65,16 @@ export function AppWrapper({ children }: { children: React.ReactNode }) {
 
   // Render based on the user state and current path
   return (
-    <AppContext.Provider value={{ user, setUser, supabase, handleSignOut }}>
+    <AppContext.Provider value={{ user, setUser, handleSignOut }}>
       {user && !isHomePage ? <SideBar>{children}</SideBar> : <>{children}</>}
     </AppContext.Provider>
   );
 }
 
-export function useAppContext() {
-  return useContext(AppContext);
-}
+export const useAppContext = () => {
+  const context = useContext(AppContext);
+  if (!context) {
+    throw new Error("useAppContext must be used within an AppContextProvider");
+  }
+  return context;
+};

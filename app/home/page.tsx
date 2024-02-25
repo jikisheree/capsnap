@@ -4,17 +4,11 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { menu } from "../components/SideBar";
+import { useRouter } from "next/navigation";
 
 export const revalidate = 0;
 
 export default async function Index() {
-  const supabase = createServerComponentClient<any>({
-    cookies,
-  });
-  const { data } = await supabase.from("checkout_detail").select("*");
-  console.log("data");
-  console.log(data);
-
   return (
     <>
       <div className="overflow-auto no-scrollbar h-screen flex flex-col">

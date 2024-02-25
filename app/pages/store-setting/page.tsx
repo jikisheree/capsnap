@@ -1,3 +1,5 @@
+"use client";
+
 import AdminModal from "@/app/components/AdminModal";
 import AdminTable from "@/app/components/AdminTable";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
