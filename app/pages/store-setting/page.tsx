@@ -1,21 +1,26 @@
 "use client";
 
-import AdminModal from "@/app/components/AdminModal";
-import AdminTable from "@/app/components/AdminTable";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import React, { useEffect, useState } from "react";
+import AdminModal from "@/app/pages/store-setting/component/AdminModal";
+import AdminTable from "@/app/pages/store-setting/component/AdminTable";
+import { createSupabaseBrowserClient } from "@/lib/supabase/supabase-browser";
+import React, { ChangeEvent, useEffect, useState } from "react";
+import { AiFillSave } from "react-icons/ai";
+import CreateAdminModal from "./component/CreateAdminModal";
 
 export interface AdminProps {
-  first_name: string;
-  last_name: string;
-  email: string;
+  name: string;
   role: string;
   joined_at: string;
+  status: string;
 }
 
 const page = () => {
-  const supabase = createClientComponentClient();
+  const supabase = createSupabaseBrowserClient();
   const [admins, setAdmins] = useState<AdminProps[] | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [imageSrc, setImageSrc] = useState(
+    "https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+  );
 
   useEffect(() => {
     const fetchAdminData = async () => {
@@ -34,64 +39,94 @@ const page = () => {
   }, []);
 
   const handleAddAdmin = () => {};
+  const handleSave = () => {};
+
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files && e.target.files[0];
+
+    if (file) {
+      setSelectedFile(file);
+
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setImageSrc(event.target?.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   return (
     <>
-      <div className="overflow-auto no-scrollbar h-screen flex flex-col bg-gradient-to-t from-indigo-500 from-30%">
-        <h1 className="p-2 ml-10 mt-7 text-5xl bg-gradient-to-r from-white to-cyan-400 text-transparent bg-clip-text font-bold">
+      <div className="overflow-auto no-scrollbar h-screen flex flex-col bg-gradient-to-t from-blue-400 from-30%">
+        <h1 className="p-2 ml-10 mt-7 text-5xl bg-clip-text font-bold">
           Store Settings
         </h1>
-        <div className=" grid place-items-center">
-          <div className="avatar">
-            <div className="w-48 mask mask-squircle">
-              <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+        <div className="flex w-full my-5">
+          <div className="grid flex-auto card rounded-box place-items-center">
+            <div className="avatar">
+              <div className="w-48 mask mask-squircle">
+                <img src={imageSrc} alt="Selected File" />
+              </div>
             </div>
-          </div>
-
-          <h1 className="mt-2 text-2xl font-bold">SHOP NAME</h1>
-          <div className="form-control w-52 mt-5">
-            <label className="cursor-pointer label">
-              <span className="label-text">OPEN</span>
-              <input type="checkbox" className="toggle toggle-primary" />
-            </label>
-          </div>
-          <div className="flex">
-            <div>
-              <input
-                type="text"
-                placeholder="Shop Name"
-                className="mt-7 input input-bordered input-primary w-full max-w-xs"
-              />
-              <input
-                // import location api
-                type="text"
-                placeholder="Location"
-                className="mt-5 input input-bordered input-primary w-full max-w-xs"
-              />
-              <input
-                type="email"
-                placeholder="Email Address"
-                className="mt-5 input input-bordered input-primary w-full max-w-xs"
-              />
+            <input
+              type="file"
+              className="file-input file-input-bordered file-input-secondary w-full max-w-xs m-3"
+              onChange={handleFileChange}
+            />
+            <h1 className="mt-2 text-2xl font-bold">SHOP NAME</h1>
+            <div className="form-control w-52 mt-5">
+              <label className="cursor-pointer label">
+                <span className="label-text">OPEN</span>
+                <input type="checkbox" className="toggle toggle-primary" />
+              </label>
             </div>
+            <input
+              type="text"
+              placeholder="Shop Name"
+              className="mt-7 input input-bordered input-primary w-full max-w-xs"
+            />
+            <input
+              // import location api
+              type="text"
+              placeholder="Location"
+              className="mt-5 input input-bordered input-primary w-full max-w-xs"
+            />
+            <input
+              type="email"
+              placeholder="Category"
+              className="mt-5 input input-bordered input-primary w-full max-w-xs"
+            />
+            <button onClick={handleSave} className="btn mr-5 flex m-5">
+              <AiFillSave />
+              save
+            </button>
+          </div>
+          <div className="divider divider-horizontal"></div>
+          <div className="grid flex-auto card rounded-box place-items-center">
             <div>
-              <div className="flex">
-                <h1>Admin Setting</h1>
+              <div
+                className="flex"
+                style={{
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <h1 className="ml-52 font-bold text-xl">Admin Setting</h1>
                 <button
                   onClick={() =>
-                    document.getElementById("adminModel")?.showModal()
+                    document.getElementById("addAdminModal")?.showModal()
                   }
-                  className="btn btn-primary"
+                  className="btn btn-primary mr-5"
                 >
                   + Admin
                 </button>
               </div>
               <AdminTable admins={admins} />
               <dialog
-                id="adminModel"
+                id="addAdminModal"
                 className="modal modal-bottom sm:modal-middle"
               >
-                <AdminModal />
+                <CreateAdminModal />
               </dialog>
             </div>
           </div>

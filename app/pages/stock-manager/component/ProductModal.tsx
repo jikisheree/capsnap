@@ -2,9 +2,9 @@
 
 import React, { useState } from "react";
 import { ProductProps } from "./CateCard";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useAppContext } from "../../../context/supabase-context";
 import { useRouter } from "next/navigation";
+import { createSupabaseBrowserClient } from "@/lib/supabase/supabase-browser";
 
 interface ModalContentProps {
   product: ProductProps;
@@ -12,7 +12,7 @@ interface ModalContentProps {
 
 // ModalContent component
 const ModalContent: React.FC<ModalContentProps> = ({ product }) => {
-  const supabase = createClientComponentClient();
+  const supabase = createSupabaseBrowserClient();
   //const router = useRouter();
   const { user } = useAppContext();
   const [loading, setLoading] = useState<boolean>(true);
@@ -27,6 +27,9 @@ const ModalContent: React.FC<ModalContentProps> = ({ product }) => {
       console.log("Saving product information...");
       setLoading(true);
 
+      const { data: authData } = await supabase.auth.getUser();
+      console.log("UUU", authData.user);
+
       const { data, error } = await supabase.rpc("update_stock", {
         p_id: product.product_id,
         new_name: name,
@@ -34,7 +37,7 @@ const ModalContent: React.FC<ModalContentProps> = ({ product }) => {
         updated_amount: stock,
         new_price: price,
         new_img: img,
-        by: user.user_metadata.firstName,
+        by: authData.user?.email,
       });
 
       if (error) console.log("cannot update product data.");

@@ -17,11 +17,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`no-scrollbar ${inter.className}`}>
-        <div data-theme="nord">
-          <AppWrapper>{children}</AppWrapper>
-          {/* {children} */}
-        </div>
+      <body className={`no-scrollbar ${inter.className}`} data-theme="nord">
+        <AppWrapper>{children}</AppWrapper>
+        {/* {children} */}
       </body>
     </html>
   );
