@@ -1,9 +1,8 @@
 import React from "react";
 
 interface StatProps {
-  name: string;
-  value: number;
-  desc: string;
+  name: string | undefined;
+  value: number | undefined;
 }
 
 const Stat = ({ data }: { data: StatProps }) => {
@@ -11,7 +10,6 @@ const Stat = ({ data }: { data: StatProps }) => {
     <div className="stat overflow-hidden">
       <div className="stat-title">{data.name}</div>
       <div className="stat-value">{data.value}</div>
-      <div className="stat-desc">{data.desc}</div>
     </div>
   );
 };

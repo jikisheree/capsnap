@@ -30,14 +30,10 @@ export default async function () {
 
   return (
     <>
-      <div className="overflow-auto no-scrollbar h-screen flex flex-col bg-gradient-to-t from-blue-200 from-30%">
-        <div className="my-10 mx-10">
-          <h1 className="p-2 text-5xl bg-clip-text font-bold">
-            Purchase History
-          </h1>
-          {data && <CheckoutCard checkoutList={data} />}
-          {/* {data && <Post serverPosts={data} />} */}
-        </div>
+      <div className="overflow-auto no-scrollbar h-screen flex flex-col px-20 py-5 bg-gradient-to-t from-blue-200 from-30%">
+        <h1 className="text-3xl font-bold">Purchase History</h1>
+        {data && <CheckoutCard checkoutList={data} />}
+        {/* {data && <Post serverPosts={data} />} */}
       </div>
     </>
   );

@@ -36,35 +36,45 @@ const page = () => {
     fetchData();
   }, []);
 
+  function countCustomersJoinedLast7Days(
+    customers: CustomerProps[] | null
+  ): number {
+    const currentDate = new Date();
+    const sevenDaysAgo = new Date(
+      currentDate.getTime() - 7 * 24 * 60 * 60 * 1000
+    );
+
+    if (customers) {
+      return customers?.filter((customer) => {
+        const joinDate = new Date(customer.join_at);
+        return joinDate >= sevenDaysAgo && joinDate <= currentDate;
+      }).length;
+    } else return 0;
+  }
+
+  const count = countCustomersJoinedLast7Days(customers);
+
   return (
     <>
-      <div className="overflow-auto no-scrollbar h-screen flex flex-col bg-gradient-to-t from-blue-200 from-30%">
-        <div className="my-10 mx-10">
-          <h1 className="text-5xl p-2 font-bold">Customers</h1>
-          <div className="flex justify-center gap-20 my-5">
-            <div className="justify-normal pt-16">
-              <div className="m-5 card w-64 bg-primary text-primary-content">
-                <div className="card-body">
-                  <h2 className="card-title text-3xl">14</h2>
-                  <h3>overall customers</h3>
-                </div>
-              </div>
-              <div className="m-5 card w-64 bg-primary text-primary-content">
-                <div className="card-body">
-                  <h2 className="card-title text-3xl">0</h2>
-                  <h3>new customers this week</h3>
-                </div>
-              </div>
-              <div className="m-5 card w-64 bg-primary text-primary-content">
-                <div className="card-body">
-                  <h2 className="card-title text-3xl">0</h2>
-                  <h3>is active</h3>
-                </div>
+      <div className="overflow-auto no-scrollbar h-screen flex flex-col px-20 py-5 bg-gradient-to-t from-blue-200 from-30%">
+        <h1 className="text-3xl font-bold">Customers</h1>
+        <div className="flex justify-center gap-20 my-5">
+          <div className="justify-normal pt-10">
+            <div className="m-5 card w-64 bg-primary text-primary-content">
+              <div className="card-body">
+                <h2 className="card-title text-3xl">{customers?.length}</h2>
+                <h3>Overall customers</h3>
               </div>
             </div>
-            <div className="overflow-x-auto h-1/3">
-              {customers && <Table customers={customers} />}
+            <div className="m-5 card w-64 bg-primary text-primary-content">
+              <div className="card-body">
+                <h2 className="card-title text-3xl">{count}</h2>
+                <h3>New customers in last 7 days</h3>
+              </div>
             </div>
+          </div>
+          <div className="overflow-x-auto h-2/5">
+            {customers && <Table customers={customers} />}
           </div>
         </div>
       </div>

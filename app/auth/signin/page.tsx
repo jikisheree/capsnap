@@ -10,13 +10,7 @@ export default function Login() {
           <Link href="/">CapSnap</Link>
         </h1>
         <div className="text-center mr-5 mt-5">
-          <p>Do not have an account?</p>
-          <button
-            type="button"
-            className="mt-5 text-black hover:text-white bg-white hover:bg-blue-300 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          >
-            <Link href="/auth/signup">Sign Up</Link>
-          </button>
+          <p>Only store admins are allowed</p>
         </div>
       </div>
       <div className=" w-1/2 ml-auto bg-white p-5 rounded-r-lg py-32">

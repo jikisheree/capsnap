@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useContext } from "react";
 import HomeCard from "../components/HomeCard";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
@@ -8,7 +10,12 @@ import { useRouter } from "next/navigation";
 
 export const revalidate = 0;
 
-export default async function Index() {
+export default function Index() {
+  const [value, setValue] = React.useState("1");
+
+  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
+    setValue(newValue);
+  };
   return (
     <>
       <div className="overflow-auto no-scrollbar h-screen flex flex-col">

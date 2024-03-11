@@ -22,7 +22,7 @@ const HomeCard = ({
           >
             <figure>
               <img
-                style={{ width: "300px", height: "250px" }}
+                style={{ width: "300px", height: "200px" }}
                 src={item.image}
                 alt="Shoes"
               />

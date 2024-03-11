@@ -1,7 +1,8 @@
 "use client";
 
 import { createSupabaseBrowserClient } from "@/lib/supabase/supabase-browser";
-import React, { useState } from "react";
+import React, { useState, useTransition } from "react";
+import { createMember } from "../actions";
 
 const CreateAdminModal = () => {
   const supabase = createSupabaseBrowserClient();
@@ -13,32 +14,28 @@ const CreateAdminModal = () => {
   const [password1, setPassword1] = useState<string>("");
   const [password2, setPassword2] = useState<string>("");
   const [role, setRole] = useState<string>("");
+  const [isPending, startTransition] = useTransition();
 
-  const handleSave = async () => {
-    try {
-      console.log("Saving product information...");
-      setLoading(true);
-
-      const { data, error } = await supabase.rpc("add_admin", {
-        firstName: firstName,
-        lastName: lastName,
+  const handleSave = () => {
+    console.log("Saving information...");
+    setLoading(true);
+    startTransition(async () => {
+      const result = await createMember({
+        password: password1,
+        username: username,
+        first_name: firstName,
+        last_name: lastName,
         email: email,
         role: role,
       });
-
-      if (error) console.log("cannot add new admin.");
-      else {
-        console.log(data);
-      }
-    } catch (e: any) {
-      throw new Error(e);
-    } finally {
-      window.location.reload();
-      setLoading(false);
-    }
+      console.log(JSON.parse(result));
+      const { error } = JSON.parse(result);
+      if (error?.message) window.alert(error.message);
+      else console.log("Successfully add admin.");
+    });
   };
   return (
-    <div className="modal-box overflow-hidden">
+    <div className="modal-box overflow-auto">
       <form method="dialog">
         {/* if there is a button in form, it will close the modal */}
         <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
@@ -93,14 +90,17 @@ const CreateAdminModal = () => {
         </div>
         <div className="col-span-2">
           <h2 className="font-bold">Role</h2>
-          <input
-            type="text"
-            placeholder="role"
-            onChange={(e) => {
-              setRole(e.target.value);
-            }}
-            className="input input-bordered input-sm input-primary w-full"
-          />
+          <select
+            className="select select-sm select-primary w-full"
+            value={role}
+            onChange={(e) => setRole(e.target.value)}
+          >
+            <option disabled selected>
+              Choose role..
+            </option>
+            <option value={"Super Admin"}>Super Admin</option>
+            <option value={"Admin"}>Admin</option>
+          </select>
         </div>
         <div className="col-span-2">
           <h2 className="font-bold">Password</h2>
@@ -131,7 +131,7 @@ const CreateAdminModal = () => {
           {/* if there is a button in form, it will close the modal */}
           <button onClick={handleSave} className="btn btn-primary">
             Submit
-            {loading && (
+            {isPending && (
               <span className="loading loading-spinner text-white"></span>
             )}
           </button>

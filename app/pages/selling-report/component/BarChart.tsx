@@ -13,6 +13,7 @@ const BarChart: React.FC<BarChartProps> = ({ chartData }) => {
 
   const options = {
     chart: {
+      width: 600,
       stacked: true,
       toolbar: {
         show: true,
@@ -21,16 +22,12 @@ const BarChart: React.FC<BarChartProps> = ({ chartData }) => {
         enabled: true,
       },
     },
+    legend: {
+      show: false,
+    },
     responsive: [
       {
         breakpoint: 480,
-        options: {
-          legend: {
-            position: "bottom",
-            offsetX: -10,
-            offsetY: 0,
-          },
-        },
       },
     ],
     plotOptions: {

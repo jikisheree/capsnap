@@ -6,6 +6,11 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import BarChart from "@/app/pages/selling-report/component/BarChart";
 import SaleTable from "@/app/pages/selling-report/component/SaleTable";
 import Stat from "./component/Stat";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DatePicker } from "@mui/x-date-pickers";
+import MyDatePickerPage from "./component/MyDatePicker";
+import MyDatePicker from "./component/MyDatePicker";
 
 export interface SaleProps {
   name: string;
@@ -27,6 +32,12 @@ export interface TableReportProps {
   total_received: number;
 }
 
+export interface StatProps {
+  product_number: number;
+  sold_units: number;
+  total_amounts: number;
+}
+
 export interface BarReportProps {
   labels: string[];
   series: BarSeriesItem[];
@@ -44,8 +55,10 @@ type BarSeriesItem = {
 
 const page = () => {
   const supabase = createClientComponentClient();
-  const [selectedDate, setSelectedDate] = useState<string>("01-01-2024");
+  const [selectedDate, setSelectedDate] = useState<Date | null>();
+  const [sentDate, setSentDate] = useState<string | null>("10-03-2024");
   const [saleData, setSaleData] = useState<SaleProps[] | null>(null);
+  const [statData, setStatData] = useState<StatProps | null>(null);
   const [barChartData, setBarChartData] = useState<BarReportProps>({
     labels: [],
     series: [],
@@ -58,12 +71,57 @@ const page = () => {
   const [view, setView] = useState("daily");
   const [type, setType] = useState("product");
 
+  const getDateString = (date: Date | null | undefined, type: string) => {
+    if (date != null) {
+      const dd = String(new Date(date).getDate()).padStart(2, "0");
+      const mm = String(new Date(date).getMonth() + 1).padStart(2, "0"); // January is 0!
+      const yyyy = new Date(date).getFullYear();
+
+      if (type === "day") {
+        console.log(`${dd}-${mm}-${yyyy}`);
+        return `${dd}-${mm}-${yyyy}`;
+      } else if (type === "month") {
+        console.log(`${mm}-${yyyy}`);
+        return `${mm}-${yyyy}`;
+      } else if (type === "year") {
+        console.log(`${yyyy}`);
+        return `${yyyy}`;
+      }
+    }
+
+    return null;
+  };
+
+  const handleDateChange = (date: Date | null) => {
+    setSelectedDate(date);
+    if (date) {
+      switch (view) {
+        case "daily":
+          setSentDate(getDateString(new Date(date), "day"));
+          break;
+        case "monthly":
+          setSentDate(getDateString(new Date(date), "month"));
+          break;
+        case "yearly":
+          setSentDate(getDateString(new Date(date), "year"));
+          break;
+        case "weekly":
+          setSentDate(getDateString(new Date(date), "day"));
+          break;
+        default:
+          setSentDate(getDateString(new Date(date), "day"));
+      }
+
+      console.log("Selected Date:", new Date(date));
+    }
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       const { data, error } = await supabase.rpc(
         `get_sales_${view}_report_by_${type}`,
         {
-          selected_date: selectedDate,
+          selected_date: sentDate,
         }
       );
       if (error) console.log(error);
@@ -75,10 +133,22 @@ const page = () => {
         processBarChartData(data);
         processPieChartandTableData(data);
       }
+
+      const { data: stat, error: statError } = await supabase
+        .rpc(`get_sales_count_${view}`, {
+          selected_date: sentDate,
+        })
+        .single();
+      if (statError) console.log(statError);
+      else {
+        console.log("Fetching sale stat from supaase success!:");
+        console.log(stat);
+        setStatData(stat);
+      }
     };
 
     fetchData();
-  }, [view, type]);
+  }, [view, type, sentDate]);
 
   const processPieChartandTableData = (data: SaleProps[]) => {
     console.log(data);
@@ -215,24 +285,24 @@ const page = () => {
   };
 
   const toggleView = (selectedView: string) => {
-    setView(selectedView);
     // need to be fixed: pop out only data to be used
-    switch (selectedView) {
+    switch (view) {
       case "daily":
-        setSelectedDate("01-01-2024");
+        setSentDate(getDateString(selectedDate, "day"));
         break;
       case "monthly":
-        setSelectedDate("01-2024");
+        setSentDate(getDateString(selectedDate, "month"));
         break;
       case "yearly":
-        setSelectedDate("2024");
+        setSentDate(getDateString(selectedDate, "year"));
         break;
       case "weekly":
-        setSelectedDate("01-01-2024");
+        setSentDate(getDateString(selectedDate, "day"));
         break;
       default:
-        setSelectedDate("01-01-2024");
+        setSentDate(getDateString(selectedDate, "day"));
     }
+    setView(selectedView);
   };
   const toggleType = (selectedType: string) => {
     setType(selectedType);
@@ -244,89 +314,87 @@ const page = () => {
   console.log(pieChartData);
   console.log(" Table Data");
   console.log(tableData);
+  console.log(" Stat Data");
+  console.log(statData);
 
   return (
     <>
-      <div className="overflow-auto no-scrollbar h-screen flex flex-col">
-        <div className="my-10 mx-10">
-          <h1 className="text-5xl p-2 font-bold">Selling Report</h1>
-          <div className="flex justify-center gap-20 my-5">
-            <div className="stats stats-vertical shadow justify-normal">
-              <Stat data={{ name: "All product", value: 300, desc: "text" }} />
-              <Stat data={{ name: "All category", value: 5, desc: "text" }} />
-              <Stat
-                data={{ name: "Product name", value: 200, desc: "best seller" }}
-              />
-              <Stat
-                data={{
-                  name: "Category name",
-                  value: 200,
-                  desc: "best seller",
-                }}
-              />
+      <div className="overflow-auto no-scrollbar h-screen flex flex-col px-20 py-5 bg-gradient-to-t from-blue-200 from-30%">
+        <h1 className="text-3xl font-bold">Selling Report</h1>
+        <div className="flex justify-center gap-20 my-5">
+          <div className="h-2/3 stats stats-vertical shadow justify-normal">
+            <Stat
+              data={{ name: "All product", value: statData?.product_number }}
+            />
+            <Stat data={{ name: "Sold", value: statData?.sold_units }} />
+            <Stat data={{ name: "Received", value: statData?.total_amounts }} />
+            {/* <Stat data={{ name: "Product name", value: 200 }} /> */}
+          </div>
+          <div className="p-5 justify-center rounded-2xl bg-primary w-5/6">
+            <div className="flex justify-center p-2 gap-10">
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker value={selectedDate} onChange={handleDateChange} />
+              </LocalizationProvider>
+              {/* <MyDatePicker /> */}
+              <div className="join">
+                <input
+                  type="radio"
+                  aria-label="Daily"
+                  className="join-item btn"
+                  name="options"
+                  onClick={() => toggleView("daily")}
+                />
+                <input
+                  type="radio"
+                  aria-label="Weekly"
+                  className="join-item btn"
+                  name="options"
+                  onClick={() => toggleView("weekly")}
+                />
+                <input
+                  type="radio"
+                  aria-label="Monthly"
+                  className="join-item btn"
+                  name="options"
+                  onClick={() => toggleView("monthly")}
+                />
+                <input
+                  type="radio"
+                  aria-label="Yearly"
+                  className="join-item btn"
+                  name="options"
+                  onClick={() => toggleView("yearly")}
+                />
+              </div>
+              <div className="join grid grid-cols-3">
+                <input
+                  className="join-item btn"
+                  type="radio"
+                  name="options"
+                  aria-label="Category"
+                  onClick={() => toggleType("category")}
+                />
+                <input
+                  className="join-item btn"
+                  type="radio"
+                  name="options"
+                  aria-label="Product"
+                  onClick={() => toggleType("product")}
+                />
+              </div>
             </div>
-            <div className="p-5 justify-center rounded-2xl bg-primary w-5/6">
-              <div className="flex justify-center p-2 gap-10">
-                <div className="join">
-                  <input
-                    type="radio"
-                    aria-label="Daily"
-                    className="join-item btn"
-                    name="options"
-                    onClick={() => toggleView("daily")}
-                  />
-                  <input
-                    type="radio"
-                    aria-label="Weekly"
-                    className="join-item btn"
-                    name="options"
-                    onClick={() => toggleView("weekly")}
-                  />
-                  <input
-                    type="radio"
-                    aria-label="Monthly"
-                    className="join-item btn"
-                    name="options"
-                    onClick={() => toggleView("monthly")}
-                  />
-                  <input
-                    type="radio"
-                    aria-label="Yearly"
-                    className="join-item btn"
-                    name="options"
-                    onClick={() => toggleView("yearly")}
-                  />
-                </div>
-                <div className="join grid grid-cols-3">
-                  <input
-                    className="join-item btn"
-                    type="radio"
-                    name="options"
-                    aria-label="Category"
-                    onClick={() => toggleType("category")}
-                  />
-                  <input
-                    className="join-item btn"
-                    type="radio"
-                    name="options"
-                    aria-label="Product"
-                    onClick={() => toggleType("product")}
-                  />
-                </div>
+            <div className="mt-5 w-full lg:flex-row">
+              <div className="w-full h-auto card bg-blue-300  rounded-box place-items-center">
+                <BarChart chartData={barChartData} />
               </div>
-              <div className="flex flex-col w-full lg:flex-row">
-                <div className="grid w-1/2 h-auto card bg-base-300 rounded-box place-items-center">
-                  <BarChart chartData={barChartData} />
-                </div>
-                <div className="divider lg:divider-horizontal"></div>
-                <div className="grid flex-auto h-auto card bg-base-300 rounded-box place-items-center">
-                  <PieChart chartData={pieChartData} />
-                </div>
+              <div className="divider lg:divider-vertical"></div>
+              <div className="h-auto card bg-base-300 rounded-box place-items-center">
+                <PieChart chartData={pieChartData} />
               </div>
-              <div className="overflow-x-auto h-72 p-2">
-                <div className="overflow-x-auto">
-                  <SaleTable saleData={tableData} />
-                </div>
+            </div>
+            <div className="overflow-x-auto h-auto p-2">
+              <div className="overflow-x-auto">
+                <SaleTable saleData={tableData} />
               </div>
             </div>
           </div>

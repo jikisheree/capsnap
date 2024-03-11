@@ -2,53 +2,17 @@ import React, { useState } from "react";
 import { AdminProps } from "../page";
 import { createSupabaseBrowserClient } from "@/lib/supabase/supabase-browser";
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
-import ConfirmModal from "./ConfirmModal";
-import AdminModal from "./AdminModal";
+import EditAdminModal from "./EditAdminModal";
+import DeleteAdmin from "./DeleteAdmin";
 
-const AdminTable = ({ admins = [] }: { admins: AdminProps[] | null }) => {
-  const supabase = createSupabaseBrowserClient();
-  const [loading, setLoading] = useState<boolean>(true);
-  const [role, setRole] = useState<string>("");
-
-  const handleRemoveAdmin = async () => {
-    try {
-      console.log("Removing admin...");
-      setLoading(true);
-
-      // delete admin from table
-      //const { data, error } = await supabase.from()
-
-      //   if (error) console.log("cannot add new admin.");
-      //   else {
-      //     console.log(data);
-      //  }
-    } catch (e: any) {
-      throw new Error(e);
-    } finally {
-      window.location.reload();
-      setLoading(false);
-    }
-  };
-
-  const handleEditAdmin = async () => {
-    try {
-      console.log("Removing admin...");
-      setLoading(true);
-
-      // delete admin from table
-      //const { data, error } = await supabase.from()
-
-      //   if (error) console.log("cannot add new admin.");
-      //   else {
-      //     console.log(data);
-      //  }
-    } catch (e: any) {
-      throw new Error(e);
-    } finally {
-      window.location.reload();
-      setLoading(false);
-    }
-  };
+const AdminTable = ({
+  admins = [],
+  isSuperAdmin,
+}: {
+  admins: AdminProps[] | null;
+  isSuperAdmin: boolean;
+}) => {
+  console.log(isSuperAdmin);
 
   return (
     <div className="justify-center overflow-x-auto">
@@ -56,7 +20,7 @@ const AdminTable = ({ admins = [] }: { admins: AdminProps[] | null }) => {
         <thead>
           <tr>
             <th></th>
-            <th>Name</th>
+            <th>Username</th>
             <th>Role</th>
             <th>Joined at</th>
             <th>status</th>
@@ -67,9 +31,9 @@ const AdminTable = ({ admins = [] }: { admins: AdminProps[] | null }) => {
           {admins?.map((item: AdminProps, index: number) => (
             <tr key={index}>
               <th>{index + 1}</th>
-              <td>{item.name}</td>
+              <td>{item.admin.username}</td>
               <td>{item.role}</td>
-              <td>{item.joined_at}</td>
+              <td>{new Date(item.created_at).toDateString()}</td>
               <td>{item.status}</td>
               <td>
                 <button
@@ -81,25 +45,12 @@ const AdminTable = ({ admins = [] }: { admins: AdminProps[] | null }) => {
                   <AiFillEdit />
                 </button>
                 <span className="m-1" />
-                <button
-                  onClick={() =>
-                    document.getElementById("confirmModal")?.showModal()
-                  }
-                  className="btn btn-secondary"
-                >
-                  <AiFillDelete />
-                </button>
-                <dialog
-                  id="confirmModal"
-                  className="modal modal-bottom sm:modal-middle"
-                >
-                  <ConfirmModal />
-                </dialog>
+                {isSuperAdmin && <DeleteAdmin user_id={item.admin_id} />}
                 <dialog
                   id="adminModal"
                   className="modal modal-bottom sm:modal-middle"
                 >
-                  <AdminModal />
+                  <EditAdminModal admin={item} />
                 </dialog>
               </td>
             </tr>
@@ -108,11 +59,10 @@ const AdminTable = ({ admins = [] }: { admins: AdminProps[] | null }) => {
         <tfoot>
           <tr>
             <th></th>
-            <th>Name</th>
-            <th>Surname</th>
-            <th>Email</th>
-            <th>Birth date</th>
+            <th>Username</th>
+            <th>Role</th>
             <th>Joined at</th>
+            <th>status</th>
             <th></th>
           </tr>
         </tfoot>

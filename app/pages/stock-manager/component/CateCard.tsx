@@ -61,14 +61,14 @@ export default function CateCard({
   };
 
   return (
-    <div className="my-10 mx-10 grid gap-y-10 grid-cols-1">
+    <div className="my-5 grid gap-y-5 grid-cols-1">
       {categories.map((item: CateProps, index: number) => (
         <div
           key={index}
           className="collapse collapse-arrow card lg:card-side shadow-xl"
         >
           <input type="radio" name="my-accordion-1" className="peer" />
-          <div className="flex collapse-title">
+          <div className="flex collapse-title  relative">
             <figure className="flex-initial">
               <img
                 className="rounded-l-lg"
@@ -81,13 +81,16 @@ export default function CateCard({
               <h2 className="card-title">{item.category_name}</h2>
               <p>{item.desc}</p>
             </div>
-            <div className="flex-initial card-body ">
+            <div className="flex-initial card-body">
               <h2 className="card-title">Remains: {item.stock} </h2>
             </div>
           </div>
           <div className="collapse-content">
             {product && (
-              <ProductCard product={filterByCategory(item.category_id)} />
+              <ProductCard
+                product={filterByCategory(item.category_id)}
+                category_id={item.category_id}
+              />
             )}
           </div>
         </div>

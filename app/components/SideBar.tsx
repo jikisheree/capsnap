@@ -81,21 +81,22 @@ export default function SideBar({ children }: { children: React.ReactNode }) {
                 SHOP NAME
               </Link>
             </li>
-            <li>
-              <Link className="flex" href={"/pages/user-setting"}>
+            <li className="flex">
+              <div className="flex">
                 <div className="flex-auto avatar placeholder">
                   <div className="bg-neutral text-neutral-content rounded-full w-12">
                     <span className="text-3xl">
-                      {user?.user_metadata.firstName
-                        ? user.user_metadata.firstName[0]
+                      {user?.user_metadata.first_name
+                        ? user.user_metadata.first_name[0]
                         : undefined}
                     </span>
                   </div>
                 </div>
                 <h1 className="flex-auto text-center text-xl">
-                  {user?.user_metadata.firstName} {user?.user_metadata.lastName}
+                  {user?.user_metadata.first_name}{" "}
+                  {user?.user_metadata.last_name}
                 </h1>
-              </Link>
+              </div>
             </li>
             <div className="mt-5">
               <Menu menu={menu} />

@@ -28,10 +28,10 @@ const PieChart: React.FC<PieChartProps> = ({ chartData }) => {
       },
     },
     labels: chartData.labels,
-    legend: {
-      offsetX: 50, // Adjust the offsetX value as needed
-      offsetY: 20, // Adjust the offsetY value as needed
-    },
+    // legend: {
+    //   offsetX: 50, // Adjust the offsetX value as needed
+    //   offsetY: 20, // Adjust the offsetY value as needed
+    // },
     responsive: [
       {
         breakpoint: 480,
