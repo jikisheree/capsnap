@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useTransition } from "react";
 import { AdminProps } from "../../page";
 import TabPanel from "@mui/lab/TabPanel";
@@ -6,6 +8,8 @@ import { updateMemberAdvanceById } from "../../actions";
 const AdvanceEditTab = ({ admin }: { admin: AdminProps }) => {
   const [status, setStatus] = useState<"Active" | "Resigned">(admin.status);
   const [role, setRole] = useState<"Admin" | "Super Admin">(admin.role);
+  console.log(admin.status);
+  console.log(admin.role);
 
   const [isPending, startTransition] = useTransition();
 
@@ -70,9 +74,9 @@ const AdvanceEditTab = ({ admin }: { admin: AdminProps }) => {
             value={status}
             onChange={(event) => handleChangeStatus(event)}
           >
-            <option disabled value="">
+            {/* <option disabled value="">
               {status}
-            </option>
+            </option> */}
             <option value={"Active"}>Active</option>
             <option value={"Resigned"}>Resigned</option>
           </select>

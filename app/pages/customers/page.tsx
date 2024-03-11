@@ -1,8 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import Table from "@/app/components/CustomerTable";
-import { useAppContext } from "@/app/context/supabase-context";
+import Table from "@/app/pages/customers/component/CustomerTable";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
 export interface CustomerProps {
@@ -21,10 +20,6 @@ const Page = () => {
   useEffect(() => {
     const fetchData = async () => {
       const { data, error } = await supabase.from("customer").select();
-      // const response = await fetch("http://localhost:3000/api/category", {
-      //   cache: "no-cache",
-      // });
-      // const data = await response.json();
       if (error) console.log(error);
       else {
         setCustomers(data);
@@ -60,20 +55,20 @@ const Page = () => {
         <h1 className="text-3xl font-bold">Customers</h1>
         <div className="flex justify-center gap-20 my-5">
           <div className="justify-normal pt-10">
-            <div className="m-5 card w-64 bg-primary text-primary-content">
+            <div className="m-5 card w-72 bg-primary text-primary-content">
               <div className="card-body">
                 <h2 className="card-title text-3xl">{customers?.length}</h2>
                 <h3>Overall customers</h3>
               </div>
             </div>
-            <div className="m-5 card w-64 bg-primary text-primary-content">
+            <div className="m-5 card w-72 bg-primary text-primary-content">
               <div className="card-body">
                 <h2 className="card-title text-3xl">{count}</h2>
                 <h3>New customers in last 7 days</h3>
               </div>
             </div>
           </div>
-          <div className="overflow-x-auto h-2/5">
+          <div className="overflow-x-auto h-1/2">
             {customers && <Table customers={customers} />}
           </div>
         </div>

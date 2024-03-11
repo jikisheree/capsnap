@@ -1,12 +1,26 @@
-import { createContext, useContext, useEffect, useState } from "react";
+"use client";
+import { createContext, useEffect, useState } from "react";
 
-export const ThemeContext = createContext(null);
+interface ThemeContextType {
+  theme?: string;
+  changeTheme?: (nextTheme?: string) => void;
+}
+export const ThemeContext = createContext<ThemeContextType>({});
 
-export const ThemeProvidee = ({ children }: any) => {
-  const [theme, setTheme] = useState("nord");
-  const [isMounted, setIsMounted] = useState(false);
+export const ThemeProvider = ({ children }: any) => {
+  const [theme, setTheme] = useState<string>("nord");
 
-  useEffect(() => {
-    setIsMounted;
-  }, []);
+  const changeTheme = (event?: any) => {
+    const nextTheme: string | null = event.target.value || null;
+    if (nextTheme) {
+      setTheme(nextTheme);
+    } else {
+      setTheme((prev) => (prev === "nord" ? "nord" : "nord"));
+    }
+  };
+  return (
+    <ThemeContext.Provider value={{ theme, changeTheme }}>
+      {children}
+    </ThemeContext.Provider>
+  );
 };

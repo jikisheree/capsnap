@@ -2,20 +2,20 @@
 
 import React from "react";
 
-const AddCategoryButton = () => {
+const AddAdminButton = () => {
   return (
     <button
       onClick={() => {
         const dialog = document.getElementById(
-          "addcategory"
+          "addAdminModal"
         ) as HTMLDialogElement;
         dialog?.showModal();
       }}
-      className="btn btn-outline btn-secondary absolute right-0 w-48"
+      className="btn btn-primary mr-5"
     >
-      + Add Category
+      + Admin
     </button>
   );
 };
 
-export default AddCategoryButton;
+export default AddAdminButton;

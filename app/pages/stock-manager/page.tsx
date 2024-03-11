@@ -1,10 +1,9 @@
 import React from "react";
 import CateCard from "@/app/pages/stock-manager/component/CateCard";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
 import { useUserStore } from "@/lib/store/user";
 import AddCategory from "./component/AddCategory";
 import AddCategoryButton from "./component/AddCategoryButton";
+import { createSupabaseServerClient } from "@/lib/supabase/supabase-server";
 
 export interface CateProps {
   category_id: number;
@@ -17,10 +16,7 @@ export interface CateProps {
 }
 
 export default async function () {
-  const supabase = createServerComponentClient<any>({
-    cookies,
-  });
-
+  const supabase = createSupabaseServerClient();
   const user = useUserStore.getState().user;
   console.log(user);
 

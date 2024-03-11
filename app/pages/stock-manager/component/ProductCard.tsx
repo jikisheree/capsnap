@@ -11,6 +11,7 @@ import DeleteModal from "./DeleteModal";
 import AddProduct from "./AddProduct";
 import HistoryModal from "./HistoryModal";
 import { getStockHistory } from "../actions";
+import { createSupabaseBrowserClient } from "@/lib/supabase/supabase-browser";
 
 const ProductCard = ({
   product = [],
@@ -23,7 +24,7 @@ const ProductCard = ({
 
   const [products, setProducts] = useState(product);
   const [productH, setProductH] = useState(undefined);
-  const supabase = createClientComponentClient();
+  const supabase = createSupabaseBrowserClient();
   const router = useRouter();
 
   const fetchData = async (
@@ -153,7 +154,7 @@ const ProductCard = ({
           </div>
         </div>
       ))}
-      <div key="add" className=" flex justify-center pt-20 gap-5">
+      <div key="add" className=" flex items-center justify-center gap-5">
         <button
           onClick={() => {
             const dialog = document.getElementById(

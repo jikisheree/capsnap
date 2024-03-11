@@ -3,8 +3,8 @@
 import React, { useEffect, useState } from "react";
 import { CateProps } from "../page";
 import ProductCard from "./ProductCard";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
+import { createSupabaseBrowserClient } from "@/lib/supabase/supabase-browser";
 
 export interface ProductProps {
   product_id: number;
@@ -27,7 +27,7 @@ export default function CateCard({
   cate.sort((a, b) => a.category_name.localeCompare(b.category_name));
 
   const [categories, setCategories] = useState(cate);
-  const supabase = createClientComponentClient();
+  const supabase = createSupabaseBrowserClient();
   const router = useRouter();
 
   useEffect(() => {

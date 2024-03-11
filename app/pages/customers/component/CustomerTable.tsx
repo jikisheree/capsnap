@@ -1,5 +1,5 @@
 import React from "react";
-import { CustomerProps } from "../pages/customers/page";
+import { CustomerProps } from "../page";
 
 const Table = ({ customers = [] }: { customers: CustomerProps[] }) => {
   return (
@@ -22,8 +22,14 @@ const Table = ({ customers = [] }: { customers: CustomerProps[] }) => {
               <td>{item.first_name}</td>
               <td>{item.last_name}</td>
               <td>{item.email}</td>
-              <td>{item.birth_date}</td>
-              <td>{item.join_at}</td>
+              <td>
+                {new Date(item.birth_date).toLocaleString([], {
+                  year: "numeric",
+                  month: "numeric",
+                  day: "numeric",
+                })}
+              </td>
+              <td>{new Date(item.join_at).toLocaleString()}</td>
             </tr>
           ))}
         </tbody>

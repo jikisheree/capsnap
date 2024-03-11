@@ -12,13 +12,13 @@ const HomeCard = ({
   className?: string;
 }) => {
   return (
-    <div className="flex justify-center">
-      <div className="my-10 gap-6 carousel carousel-center w-2/3 p-3 space-x-4 bg-neutral rounded-box">
+    <div className="flex items-center justify-center">
+      <div className="my-10 gap-6 carousel carousel-center w-2/3 p-3 space-x-4 rounded-box">
         {menu.map((item: MenuProps, index: number) => (
           <Link
             key={index}
             href={item.path}
-            className={`card w-48 bg-base-100 shadow-xl ${className}`}
+            className={`card h-60 w-48 bg-base-100 shadow-xl ${className}`}
           >
             <figure>
               <img

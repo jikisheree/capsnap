@@ -2,8 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 import { CheckoutProps } from "../page";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
+import { createSupabaseBrowserClient } from "@/lib/supabase/supabase-browser";
 
 const CheckoutCard = ({ checkoutList = [] }: { checkoutList: any[] }) => {
   checkoutList.sort((a, b) => {
@@ -14,7 +14,7 @@ const CheckoutCard = ({ checkoutList = [] }: { checkoutList: any[] }) => {
     return dateA - dateB;
   });
   const [posts, setPosts] = useState(checkoutList);
-  const supabase = createClientComponentClient<any>();
+  const supabase = createSupabaseBrowserClient();
   const router = useRouter();
 
   const dateFormat = (date: string) => {
@@ -74,7 +74,7 @@ const CheckoutCard = ({ checkoutList = [] }: { checkoutList: any[] }) => {
               </h2>
             </div>
           </div>
-          <div className="collapse-content bg-primary text-primary-content peer-checked:text-warning-content">
+          <div className="collapse-content text-primary-content peer-checked:text-warning-content">
             <div className="mt-3 collapse collapse-plus card lg:card-side bg-white">
               <div className="flex flex-row justify-center font-bold">
                 <h3 className="pl-7 w-3/4">Product</h3>

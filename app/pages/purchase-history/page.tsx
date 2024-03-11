@@ -2,9 +2,7 @@
 
 import React from "react";
 import CheckoutCard from "@/app/pages/purchase-history/component/CheckoutCard";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
-import Post from "./component/Post";
+import { createSupabaseServerClient } from "@/lib/supabase/supabase-server";
 
 export interface CheckoutProps {
   first_name: string;
@@ -19,14 +17,10 @@ export interface CheckoutProps {
 }
 
 export default async function () {
-  const supabase = createServerComponentClient<any>({
-    cookies,
-  });
+  const supabase = createSupabaseServerClient();
 
   const { data, error } = await supabase.rpc("get_checkout_info");
-  // const { data, error } = await supabase.from("checkout_detail").select("*");
-  console.log("data");
-  console.log(data);
+  if (error) window.alert("Error fetching checkout data: " + error);
 
   return (
     <>

@@ -6,6 +6,8 @@ import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import { useUserStore } from "@/lib/store/user";
 import readUserSession from "@/lib/actions";
 import { redirect } from "next/navigation";
+import { ThemeProvider } from "./context/theme-context";
+import ClientThemeWrapper from "./ClientThemeWrapper";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,13 +30,14 @@ export default async function RootLayout({
   // console.log(useUserStore.getState().user);
 
   return (
-    <html lang="en" data-theme="nord">
+    <html lang="en">
       <AppRouterCacheProvider>
         <body className={`no-scrollbar ${inter.className}`}>
-          <div data-theme="nord">
-            <AppWrapper>{children}</AppWrapper>
-          </div>
-          {/* {children} */}
+          <ThemeProvider>
+            <ClientThemeWrapper>
+              <AppWrapper>{children}</AppWrapper>
+            </ClientThemeWrapper>
+          </ThemeProvider>
         </body>
       </AppRouterCacheProvider>
     </html>

@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import { AdminProps } from "../page";
 import { createSupabaseBrowserClient } from "@/lib/supabase/supabase-browser";
-import { AiFillEdit, AiFillDelete } from "react-icons/ai";
+import { AiFillEdit } from "react-icons/ai";
 import EditAdminModal from "./EditAdminModal";
 import DeleteAdmin from "./DeleteAdmin";
+import { useRouter } from "next/navigation";
 
 const AdminTable = ({
   admins = [],
@@ -12,7 +15,49 @@ const AdminTable = ({
   admins: AdminProps[] | null;
   isSuperAdmin: boolean;
 }) => {
-  console.log(isSuperAdmin);
+  const [admin, setAdmin] = useState(admins);
+  const supabase = createSupabaseBrowserClient();
+  const router = useRouter();
+
+  useEffect(() => {
+    setAdmin(admins);
+  }, [admins]);
+
+  useEffect(() => {
+    const channel = supabase
+      .channel("Admins updates")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "admin" },
+        (payload) => {
+          console.log(payload);
+          router.refresh();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [supabase, setAdmin, admin]);
+
+  useEffect(() => {
+    const channel = supabase
+      .channel("Permission updates")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "permission" },
+        (payload) => {
+          console.log(payload);
+          router.refresh();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [supabase, setAdmin, admin]);
 
   return (
     <div className="justify-center overflow-x-auto">
@@ -39,7 +84,7 @@ const AdminTable = ({
                 <button
                   onClick={() => {
                     const dialog = document.getElementById(
-                      "adminModal"
+                      item.admin_id
                     ) as HTMLDialogElement;
                     dialog?.showModal();
                   }}
@@ -50,7 +95,7 @@ const AdminTable = ({
                 <span className="m-1" />
                 {isSuperAdmin && <DeleteAdmin user_id={item.admin_id} />}
                 <dialog
-                  id="adminModal"
+                  id={item.admin_id}
                   className="modal modal-bottom sm:modal-middle"
                 >
                   <EditAdminModal admin={item} />

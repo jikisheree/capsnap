@@ -1,21 +1,17 @@
-"use client";
-
-import React, { useContext } from "react";
+import React from "react";
 import HomeCard from "../components/HomeCard";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { redirect } from "next/navigation";
-import { cookies } from "next/headers";
 import { menu } from "../components/SideBar";
-import { useRouter } from "next/navigation";
+import { createSupabaseServerClient } from "@/lib/supabase/supabase-server";
 
 export const revalidate = 0;
 
-export default function Index() {
-  const [value, setValue] = React.useState("1");
-
-  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
-    setValue(newValue);
-  };
+export default async function Index() {
+  const supabase = createSupabaseServerClient();
+  const { data, error } = await supabase
+    .from("store_data")
+    .select("store_name")
+    .single();
+  if (error) window.alert("Error fetching store name:" + error);
   return (
     <>
       <div className="overflow-auto no-scrollbar h-screen flex flex-col">
@@ -27,9 +23,9 @@ export default function Index() {
               src="https://images.unsplash.com/photo-1472851294608-062f824d29cc?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             />
             <h1 className="flex-initial ml-10 mt-7 text-5xl bg-clip-text font-bold">
-              Welcome,
+              Welcome to
               <br></br>
-              to SHOP NAME
+              {data?.store_name}
             </h1>
           </div>
           <HomeCard menu={menu} className="carousel-item" />

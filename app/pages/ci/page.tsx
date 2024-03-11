@@ -4,12 +4,12 @@ import React from "react";
 const Page = () => {
   return (
     <>
-      <div className="ml-24 mt-20 grid grid-cols-3 justify-center h-screen">
-        <div className="h-2/3 card card-compact w-96 bg-base-100 shadow-xl">
+      <div className="h-screen flex items-center justify-center gap-5">
+        <div className="h-2/4 card card-compact w-80 bg-base-100 shadow-xl">
           <figure>
             <img
-              src="https://daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg"
-              alt="Shoes"
+              src="https://images.unsplash.com/photo-1600267165477-6d4cc741b379?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              alt="adddata"
             />
           </figure>
           <div className="card-body">
@@ -26,10 +26,10 @@ const Page = () => {
             </div>
           </div>
         </div>
-        <div className="h-2/3 card card-compact w-96 bg-base-100 shadow-xl">
+        <div className="h-2/4 card card-compact w-80 bg-base-100 shadow-xl">
           <figure>
             <img
-              src="https://daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg"
+              src="https://thebulletin.org/wp-content/uploads/2023/08/AdobeStock_580829354-1024x683.jpeg"
               alt="Shoes"
             />
           </figure>
@@ -47,10 +47,10 @@ const Page = () => {
             </div>
           </div>
         </div>
-        <div className="h-2/3 card card-compact w-96 bg-base-100 shadow-xl">
+        <div className="h-2/4 card card-compact w-80 bg-base-100 shadow-xl">
           <figure>
             <img
-              src="https://daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg"
+              src="https://www.lifewire.com/thmb/TRGYpWa4KzxUt1Fkgr3FqjOd6VQ=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/cloud-upload-a30f385a928e44e199a62210d578375a.jpg"
               alt="Shoes"
             />
           </figure>

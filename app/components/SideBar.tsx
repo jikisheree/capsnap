@@ -52,15 +52,15 @@ export const menu: MenuProps[] = [
   {
     icon: <AiOutlineTeam size={60} />,
     image:
-      "https://images.unsplash.com/photo-1553456558-aff63285bdd1?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "https://plus.unsplash.com/premium_photo-1661381010821-69e2076c669b?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     title: "Customers",
     path: "/pages/customers",
   },
   {
     icon: <AiFillBulb size={60} />,
     image:
-      "https://images.unsplash.com/photo-1553456558-aff63285bdd1?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    title: "Customers",
+      "https://thebulletin.org/wp-content/uploads/2023/08/AdobeStock_580829354-1024x683.jpeg",
+    title: "Classification Model",
     path: "/pages/ci",
   },
 ];

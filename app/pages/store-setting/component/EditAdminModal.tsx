@@ -48,11 +48,11 @@ const EditAdminModal: React.FC<EditAdminModalProps> = ({ admin }) => {
         </Box>
 
         {/* Tab Panels */}
-        <BasicEditTab admin={admin} />
+        <BasicEditTab admin={admin} key={`ba-${admin.admin_id}`} />
 
-        <AccountEditTab admin={admin} />
+        <AccountEditTab admin={admin} key={`ac-${admin.admin_id}`} />
 
-        <AdvanceEditTab admin={admin} />
+        <AdvanceEditTab admin={admin} key={`ad-${admin.admin_id}`} />
       </TabContext>
     </div>
   );
