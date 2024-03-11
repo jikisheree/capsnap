@@ -2,15 +2,12 @@
 
 import React, { useEffect, useState } from "react";
 import PieChart from "@/app/pages/selling-report/component/PieChart";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import BarChart from "@/app/pages/selling-report/component/BarChart";
 import SaleTable from "@/app/pages/selling-report/component/SaleTable";
-import Stat from "./component/Stat";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers";
-import MyDatePickerPage from "./component/MyDatePicker";
-import MyDatePicker from "./component/MyDatePicker";
+import { createSupabaseBrowserClient } from "@/lib/supabase/supabase-browser";
 
 export interface SaleProps {
   name: string;
@@ -54,7 +51,7 @@ type BarSeriesItem = {
 };
 
 const Page = () => {
-  const supabase = createClientComponentClient();
+  const supabase = createSupabaseBrowserClient();
   const [selectedDate, setSelectedDate] = useState<Date | null>();
   const [sentDate, setSentDate] = useState<string | null>("10-03-2024");
   const [saleData, setSaleData] = useState<SaleProps[] | null>(null);
@@ -148,7 +145,7 @@ const Page = () => {
     };
 
     fetchData();
-  }, [view, type, sentDate]);
+  }, [type, sentDate]);
 
   const processPieChartandTableData = (data: SaleProps[]) => {
     console.log(data);
@@ -286,7 +283,9 @@ const Page = () => {
 
   const toggleView = (selectedView: string) => {
     // need to be fixed: pop out only data to be used
-    switch (view) {
+    console.log(selectedView);
+    setView(selectedView);
+    switch (selectedView) {
       case "daily":
         setSentDate(getDateString(selectedDate, "day"));
         break;
@@ -302,7 +301,6 @@ const Page = () => {
       default:
         setSentDate(getDateString(selectedDate, "day"));
     }
-    setView(selectedView);
   };
   const toggleType = (selectedType: string) => {
     setType(selectedType);
@@ -322,13 +320,29 @@ const Page = () => {
       <div className="overflow-auto no-scrollbar h-screen flex flex-col px-20 py-5 bg-gradient-to-t from-blue-200 from-30%">
         <h1 className="text-3xl font-bold">Selling Report</h1>
         <div className="flex justify-center gap-20 my-5">
-          <div className="h-2/3 stats stats-vertical shadow justify-normal">
-            <Stat
-              data={{ name: "All product", value: statData?.product_number }}
-            />
-            <Stat data={{ name: "Sold", value: statData?.sold_units }} />
-            <Stat data={{ name: "Received", value: statData?.total_amounts }} />
-            {/* <Stat data={{ name: "Product name", value: 200 }} /> */}
+          <div className="justify-normal">
+            <div className="m-5 card w-52 bg-primary text-primary-content">
+              <div className="card-body">
+                <h2 className="card-title text-3xl">
+                  {statData?.product_number}
+                </h2>
+                <h3>All product</h3>
+              </div>
+            </div>
+            <div className="m-5 card w-52 bg-primary text-primary-content">
+              <div className="card-body">
+                <h2 className="card-title text-3xl">{statData?.sold_units}</h2>
+                <h3>Sold</h3>
+              </div>
+            </div>
+            <div className="m-5 card w-52 bg-primary text-primary-content">
+              <div className="card-body">
+                <h2 className="card-title text-3xl">
+                  {statData?.total_amounts}
+                </h2>
+                <h3>Received</h3>
+              </div>
+            </div>
           </div>
           <div className="p-5 justify-center rounded-2xl bg-primary w-5/6">
             <div className="flex justify-center p-2 gap-10">
@@ -405,21 +419,3 @@ const Page = () => {
 };
 
 export default Page;
-
-// const newOptions = (data: ReportProps) => {
-//     chart: {
-//       type: 'bar',
-//       stacked: true,
-//     },
-//     series: newData.series.map((_, index) => ({
-//       name: Product ${index + 1},
-//       data: newData.series[index],
-//     })),
-//     xaxis: {
-//       categories: newData.labels,
-//     },
-//   };
-
-//   setData(newData);
-//   setOptions(newOptions);
-// };

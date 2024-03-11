@@ -66,7 +66,9 @@ export function AppWrapper({ children }: { children: React.ReactNode }) {
   // Render based on the user state and current path
   return (
     <AppContext.Provider value={{ user, setUser, handleSignOut }}>
-      {user && !isHomePage ? <SideBar>{children}</SideBar> : <>{children}</>}
+      <div data-theme="nord">
+        {user && !isHomePage ? <SideBar>{children}</SideBar> : <>{children}</>}
+      </div>
     </AppContext.Provider>
   );
 }

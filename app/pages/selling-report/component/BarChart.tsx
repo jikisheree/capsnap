@@ -1,4 +1,4 @@
-"use client"; // if you use app dir, don't forget this line
+// "use server"; // if you use app dir, don't forget this line
 
 import dynamic from "next/dynamic";
 import { BarReportProps } from "../page";
