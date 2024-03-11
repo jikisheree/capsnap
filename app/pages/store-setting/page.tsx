@@ -194,9 +194,12 @@ const Page = () => {
                 <h1 className="ml-52 font-bold text-xl">Admin Setting</h1>
                 {isSuperAdmin && (
                   <button
-                    onClick={() =>
-                      document.getElementById("addAdminModal")?.showModal()
-                    }
+                    onClick={() => {
+                      const dialog = document.getElementById(
+                        "addAdminModal"
+                      ) as HTMLDialogElement;
+                      dialog?.showModal();
+                    }}
                     className="btn btn-primary mr-5"
                   >
                     + Admin

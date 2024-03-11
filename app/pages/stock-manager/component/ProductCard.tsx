@@ -26,7 +26,11 @@ const ProductCard = ({
   const supabase = createClientComponentClient();
   const router = useRouter();
 
-  const fetchData = async (index: number, product_id: number, category_id: number) => {
+  const fetchData = async (
+    index: number,
+    product_id: number,
+    category_id: number
+  ) => {
     const { result: data, error } = JSON.parse(
       await getStockHistory(product_id)
     );
@@ -38,9 +42,11 @@ const ProductCard = ({
       console.log(data);
     }
     setProductH(data);
-    document.getElementById(`history${index}-${category_id}`)?.showModal();
+    const dialog = document.getElementById(
+      `history${index}-${category_id}`
+    ) as HTMLDialogElement;
+    dialog?.showModal();
   };
-
 
   useEffect(() => {
     setProducts(product);
@@ -92,28 +98,30 @@ const ProductCard = ({
           <div className="collapse-content">
             <div className="grid grid-cols-3 gap-2">
               <button
-                onClick={() =>
-                  document
-                    .getElementById(`view${index}-${item.category_id}`)
-                    ?.showModal()
-                }
+                onClick={() => {
+                  const dialog = document.getElementById(
+                    `view${index}-${item.category_id}`
+                  ) as HTMLDialogElement;
+                  dialog?.showModal();
+                }}
                 className="btn btn-primary"
               >
                 Edit
               </button>
               <button
-                onClick={() =>
-                  document
-                    .getElementById(`delete${index}-${item.category_id}`)
-                    ?.showModal()
-                }
+                onClick={() => {
+                  const dialog = document.getElementById(
+                    `delete${index}-${item.category_id}`
+                  ) as HTMLDialogElement;
+                  dialog?.showModal();
+                }}
                 className="btn btn-primary"
               >
                 Delete
               </button>
               <button
                 onClick={() =>
-                  fetchData(index,item.product_id, item.category_id)
+                  fetchData(index, item.product_id, item.category_id)
                 }
                 className="btn btn-primary"
               >
@@ -147,17 +155,23 @@ const ProductCard = ({
       ))}
       <div key="add" className=" flex justify-center pt-20 gap-5">
         <button
-          onClick={() =>
-            document.getElementById(`addproduct-${category_id}`)?.showModal()
-          }
+          onClick={() => {
+            const dialog = document.getElementById(
+              `addproduct-${category_id}`
+            ) as HTMLDialogElement;
+            dialog?.showModal();
+          }}
           className="btn btn-outline btn-secondary w-48"
         >
           + Add Product
         </button>
         <button
-          onClick={() =>
-            document.getElementById(`delete-${category_id}`)?.showModal()
-          }
+          onClick={() => {
+            const dialog = document.getElementById(
+              `delete-${category_id}`
+            ) as HTMLDialogElement;
+            dialog?.showModal();
+          }}
           className="btn btn-outline btn-secondary w-48 btn-error"
         >
           <AiFillDelete /> Delete Category

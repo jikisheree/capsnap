@@ -58,7 +58,7 @@ const Page = () => {
   const [selectedDate, setSelectedDate] = useState<Date | null>();
   const [sentDate, setSentDate] = useState<string | null>("10-03-2024");
   const [saleData, setSaleData] = useState<SaleProps[] | null>(null);
-  const [statData, setStatData] = useState<StatProps | null>(null);
+  const [statData, setStatData] = useState<any>(null);
   const [barChartData, setBarChartData] = useState<BarReportProps>({
     labels: [],
     series: [],

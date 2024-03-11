@@ -8,6 +8,7 @@ import {
   AiFillProfile,
   AiFillDashboard,
   AiOutlineTeam,
+  AiFillBulb,
 } from "react-icons/ai";
 import { useAppContext } from "../context/supabase-context";
 import Link from "next/link";
@@ -54,6 +55,13 @@ export const menu: MenuProps[] = [
       "https://images.unsplash.com/photo-1553456558-aff63285bdd1?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     title: "Customers",
     path: "/pages/customers",
+  },
+  {
+    icon: <AiFillBulb size={60} />,
+    image:
+      "https://images.unsplash.com/photo-1553456558-aff63285bdd1?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    title: "Customers",
+    path: "/pages/ci",
   },
 ];
 

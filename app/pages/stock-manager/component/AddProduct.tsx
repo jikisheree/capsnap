@@ -6,7 +6,9 @@ import { revalidatePath } from "next/cache";
 const AddProduct = ({ category_id }: { category_id: number }) => {
   const { user } = useAppContext();
   const [isPending, startTransition] = useTransition();
-  const dialog = document.getElementById(`addproduct-${category_id}`);
+  const dialog = document.getElementById(
+    `addproduct-${category_id}`
+  ) as HTMLDialogElement;
 
   const handleSave = (formData: FormData) => {
     // event.preventDefault();

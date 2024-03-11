@@ -22,7 +22,12 @@ const DeleteAdmin = ({ user_id }: { user_id: string }) => {
   return (
     <>
       <button
-        onClick={() => document.getElementById("confirmModal")?.showModal()}
+        onClick={() => {
+          const dialog = document.getElementById(
+            "confirmModal"
+          ) as HTMLDialogElement;
+          dialog?.showModal();
+        }}
         className="btn btn-secondary"
       >
         <AiFillDelete />

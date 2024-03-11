@@ -5,8 +5,8 @@ import { addNewCategory } from "../actions";
 
 const AddCategory = () => {
   const [isPending, startTransition] = useTransition();
-  const dialog = document.getElementById("addcategory");
-
+  // const dialog = document.getElementById("addcategory");
+  const dialog = document.getElementById("addcategory") as HTMLDialogElement;
   const handleSave = (formData: FormData) => {
     // event.preventDefault();
     startTransition(async () => {
@@ -24,7 +24,9 @@ const AddCategory = () => {
         if (error) console.log("Cannot add new category.");
         else {
           console.log(data);
-          dialog?.close();
+          //   if (dialog) {
+          dialog.close();
+          //   }
         }
       } catch (e: any) {
         window.alert(e);

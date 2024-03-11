@@ -37,9 +37,12 @@ const AdminTable = ({
               <td>{item.status}</td>
               <td>
                 <button
-                  onClick={() =>
-                    document.getElementById("adminModal")?.showModal()
-                  }
+                  onClick={() => {
+                    const dialog = document.getElementById(
+                      "adminModal"
+                    ) as HTMLDialogElement;
+                    dialog?.showModal();
+                  }}
                   className="btn btn-primary"
                 >
                   <AiFillEdit />
