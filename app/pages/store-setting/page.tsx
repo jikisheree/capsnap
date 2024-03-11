@@ -31,7 +31,7 @@ export interface StoreProps {
   category: string;
 }
 
-const page = () => {
+const Page = () => {
   const supabase = createSupabaseBrowserClient();
   const [admins, setAdmins] = useState<AdminProps[] | null>(null);
   const [store, setStore] = useState<StoreProps | null>(null);
@@ -218,4 +218,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

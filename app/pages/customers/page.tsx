@@ -14,7 +14,7 @@ export interface CustomerProps {
   join_at: string;
 }
 
-const page = () => {
+const Page = () => {
   const supabase = createClientComponentClient();
   const [customers, setCustomers] = useState<CustomerProps[] | null>(null);
 
@@ -82,4 +82,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

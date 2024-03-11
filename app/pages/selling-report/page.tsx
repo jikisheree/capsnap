@@ -53,7 +53,7 @@ type BarSeriesItem = {
   data: number[];
 };
 
-const page = () => {
+const Page = () => {
   const supabase = createClientComponentClient();
   const [selectedDate, setSelectedDate] = useState<Date | null>();
   const [sentDate, setSentDate] = useState<string | null>("10-03-2024");
@@ -404,7 +404,7 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
 
 // const newOptions = (data: ReportProps) => {
 //     chart: {
