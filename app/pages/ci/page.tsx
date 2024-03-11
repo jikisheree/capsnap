@@ -14,7 +14,7 @@ const Page = () => {
           </figure>
           <div className="card-body">
             <h2 className="card-title">Add New Data!</h2>
-            <p>Add Product Data Set</p>
+            <p>Add Product Data Set for training model to know new products</p>
             <div className="card-actions justify-end">
               <Link
                 href="https://drive.google.com/drive/folders/1Gb8hhryEwnBMVzFV0fABDMz8z7MTgCQi?usp=sharing"
@@ -35,7 +35,7 @@ const Page = () => {
           </figure>
           <div className="card-body">
             <h2 className="card-title">Train Model!</h2>
-            <p>Train Model</p>
+            <p>Training the model to recognize new products</p>
             <div className="card-actions justify-end">
               <Link
                 href="https://drive.google.com/file/d/1vV6_aNKm74wJP-uW-_WkNWjsllOmUcic/view?usp=sharing"
@@ -56,7 +56,7 @@ const Page = () => {
           </figure>
           <div className="card-body">
             <h2 className="card-title">Export model!</h2>
-            <p>Export model</p>
+            <p>Exporting your trained machine learning model</p>
             <div className="card-actions justify-end">
               <Link
                 href="https://drive.google.com/drive/folders/12WMy9_RcEpFcYYbzkCTRKG-jwD0kAfLt?usp=sharing"
