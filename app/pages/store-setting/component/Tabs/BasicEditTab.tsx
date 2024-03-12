@@ -32,8 +32,6 @@ const BasicEditTab = ({ admin }: { admin: AdminProps }) => {
       }
     } catch (e: any) {
       console.error(e);
-    } finally {
-      window.location.reload(); // Reload the page after saving (you may want to consider a different approach)
     }
   };
 

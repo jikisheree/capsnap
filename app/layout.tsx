@@ -19,13 +19,13 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const { data: userSession } = await readUserSession();
-  console.log("user");
-  console.log(userSession);
+  // const { data: userSession } = await readUserSession();
+  // console.log("user");
+  // console.log(userSession);
 
-  if (!userSession.user) return redirect("/signin");
-  useUserStore.setState({ user: userSession.user });
-  console.log(useUserStore.getState().user);
+  // if (!userSession.user) return redirect("/signin");
+  // useUserStore.setState({ user: userSession.user });
+  // console.log(useUserStore.getState().user);
 
   return (
     <html lang="en">

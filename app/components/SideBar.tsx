@@ -86,7 +86,7 @@ export default function SideBar({ children }: { children: React.ReactNode }) {
             {/* Sidebar content here */}
             <li>
               <Link className="text-2xl font-bold" href="/home">
-                SHOP NAME
+                Prototype Shop
               </Link>
             </li>
             <li className="flex">
