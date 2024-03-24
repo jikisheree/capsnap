@@ -51,24 +51,24 @@ const Page = () => {
 
   return (
     <>
-      <div className="overflow-auto no-scrollbar h-screen flex flex-col px-20 py-5 bg-gradient-to-t from-blue-200 from-30%">
+      <div className="overflow-clip no-scrollbar h-screen flex flex-col px-20 py-5 bg-gradient-to-t from-blue-200 from-30%">
         <h1 className="text-3xl font-bold">Customers</h1>
         <div className="flex justify-center gap-20 my-5">
-          <div className="justify-normal pt-10">
-            <div className="m-5 card w-72 bg-primary text-primary-content">
+          <div className="my-12 justify-between items-center">
+            <div className="m-10 card w-72 bg-primary text-primary-content">
               <div className="card-body">
                 <h2 className="card-title text-3xl">{customers?.length}</h2>
                 <h3>Overall customers</h3>
               </div>
             </div>
-            <div className="m-5 card w-72 bg-primary text-primary-content">
+            <div className="m-10 card w-72 bg-primary text-primary-content">
               <div className="card-body">
                 <h2 className="card-title text-3xl">{count}</h2>
                 <h3>New customers in last 7 days</h3>
               </div>
             </div>
           </div>
-          <div className="overflow-x-auto h-1/2">
+          <div className="h-1/2 overflow-y-auto">
             {customers && <Table customers={customers} />}
           </div>
         </div>
@@ -78,3 +78,4 @@ const Page = () => {
 };
 
 export default Page;
+

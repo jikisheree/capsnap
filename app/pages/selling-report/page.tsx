@@ -53,7 +53,7 @@ type BarSeriesItem = {
 const Page = () => {
   const supabase = createSupabaseBrowserClient();
   const [selectedDate, setSelectedDate] = useState<Date | null>();
-  const [sentDate, setSentDate] = useState<string | null>("10-03-2024");
+  const [sentDate, setSentDate] = useState<string | null>(new Date().toLocaleDateString('en', { day: '2-digit', month: '2-digit', year: 'numeric' }));
   const [saleData, setSaleData] = useState<SaleProps[] | null>(null);
   const [statData, setStatData] = useState<any>(null);
   const [barChartData, setBarChartData] = useState<BarReportProps>({
@@ -320,7 +320,7 @@ const Page = () => {
       <div className="overflow-auto no-scrollbar h-screen flex flex-col px-20 py-5 bg-gradient-to-t from-blue-200 from-30%">
         <h1 className="text-3xl font-bold">Selling Report</h1>
         <div className="flex justify-center gap-20 my-5">
-          <div className="justify-normal">
+          <div className="my-12">
             <div className="m-5 card w-52 bg-primary text-primary-content">
               <div className="card-body">
                 <h2 className="card-title text-3xl">
@@ -331,20 +331,20 @@ const Page = () => {
             </div>
             <div className="m-5 card w-52 bg-primary text-primary-content">
               <div className="card-body">
-                <h2 className="card-title text-3xl">{statData?.sold_units}</h2>
+                <h2 className="card-title text-3xl">{statData?.sold_units ?? 0}</h2>
                 <h3>Sold</h3>
               </div>
             </div>
             <div className="m-5 card w-52 bg-primary text-primary-content">
               <div className="card-body">
                 <h2 className="card-title text-3xl">
-                  {statData?.total_amounts}
+                  {statData?.total_amounts ?? 0}
                 </h2>
                 <h3>Received</h3>
               </div>
             </div>
           </div>
-          <div className="p-5 justify-center rounded-2xl bg-primary w-5/6">
+          <div className="p-5 justify-center rounded-2xl w-5/6">
             <div className="flex justify-center p-2 gap-10">
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker value={selectedDate} onChange={handleDateChange} />

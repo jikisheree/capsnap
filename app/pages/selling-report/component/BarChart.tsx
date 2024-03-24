@@ -11,6 +11,10 @@ interface BarChartProps {
 const BarChart: React.FC<BarChartProps> = ({ chartData }) => {
   console.log(chartData);
 
+  if (!chartData.series || chartData.series.length === 0 || !chartData.labels || chartData.labels.length === 0) {
+    return <div>No data available this day</div>;
+  }
+
   const options = {
     chart: {
       width: 600,
@@ -45,7 +49,7 @@ const BarChart: React.FC<BarChartProps> = ({ chartData }) => {
     xaxis: {
       categories: chartData.labels,
       tickPlacement: "on",
-    },
+    }
   };
 
   const series = chartData.series;

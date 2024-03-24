@@ -15,7 +15,7 @@ const ModalContent: React.FC<ModalContentProps> = ({ product }) => {
   const supabase = createSupabaseBrowserClient();
   //const router = useRouter();
   const { user } = useAppContext();
-  const [loading, setLoading] = useState<boolean>(true);
+  const [type, setType] = useState<"Increase"|"Decrease">("Increase");
   const [name, setName] = useState<string>(product.product_name);
   const [description, setDescription] = useState<string>(product.description);
   const [price, setPrice] = useState<number>(product.price);
@@ -25,19 +25,18 @@ const ModalContent: React.FC<ModalContentProps> = ({ product }) => {
   const handleSave = async () => {
     try {
       console.log("Saving product information...");
-      setLoading(true);
 
       const { data: authData } = await supabase.auth.getUser();
       console.log("UUU", authData.user);
 
-      const { data, error } = await supabase.rpc("update_stock", {
+      const { data, error } = await supabase.rpc("update_stock_by_admin", {
         p_id: product.product_id,
+        type: type,
         new_name: name,
         new_desc: description,
         updated_amount: stock,
         new_price: price,
         new_img: img,
-        by: authData.user?.email,
       });
 
       if (error) console.log("cannot update product data.");
@@ -46,9 +45,11 @@ const ModalContent: React.FC<ModalContentProps> = ({ product }) => {
       }
     } catch (e: any) {
       throw new Error(e);
-    } finally {
-      setLoading(false);
     }
+  };
+
+  const handleChangeType = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setType(event.target.value as "Increase"|"Decrease");
   };
 
   return (
@@ -60,7 +61,7 @@ const ModalContent: React.FC<ModalContentProps> = ({ product }) => {
         <h2 className="font-bold">Name: </h2>
         <input
           type="text"
-          placeholder={name}
+          value={name}
           onChange={(e) => {
             setName(e.target.value);
           }}
@@ -69,7 +70,7 @@ const ModalContent: React.FC<ModalContentProps> = ({ product }) => {
         <h2 className="font-bold">Image url: </h2>
         <input
           type="text"
-          placeholder={img}
+          value={img}
           onChange={(e) => {
             setImg(e.target.value);
           }}
@@ -78,7 +79,7 @@ const ModalContent: React.FC<ModalContentProps> = ({ product }) => {
         <h2 className="font-bold">Description: </h2>
         <textarea
           className="textarea textarea-primary col-span-2"
-          placeholder={product.description}
+          value={description}
           onChange={(e) => {
             setDescription(e.target.value);
           }}
@@ -86,7 +87,7 @@ const ModalContent: React.FC<ModalContentProps> = ({ product }) => {
         <h2 className="font-bold">Price: </h2>
         <input
           type="text"
-          placeholder={product.price.toString()}
+          value={price}
           onChange={(e) => {
             setPrice(parseInt(e.target.value, 10));
           }}
@@ -97,16 +98,20 @@ const ModalContent: React.FC<ModalContentProps> = ({ product }) => {
           <h3 className="font-bold text-sm text-primary">
             There are {product.stock} in stock.
           </h3>
-          {/* <select className="select select-primary w-full max-w-xs text-white">
-            <option disabled selected>
-              Add or Remove from stock?
+          <select
+            className="select select-sm select-primary w-full my-3"
+            value={type}
+            onChange={(event) => handleChangeType(event)}
+          >
+            <option disabled value="">
+              Do you want increase or decrease the stock?
             </option>
-            <option>Remove</option>
-            <option>Add</option>
-          </select> */}
+            <option value={"Increase"}>Increase</option>
+            <option value={"Decrease"}>Decrease</option>
+          </select>
           <input
             type="text"
-            placeholder="update unit"
+            placeholder={"update unit"}
             onChange={(e) => {
               setStock(parseInt(e.target.value, 10));
             }}
@@ -117,7 +122,7 @@ const ModalContent: React.FC<ModalContentProps> = ({ product }) => {
       <div className="modal-action">
         <form method="dialog">
           {/* if there is a button in form, it will close the modal */}
-          <button onClick={handleSave} className="btn btn-primary">
+          <button onClick={handleSave} className="btn m-2 btn-primary">
             Save
           </button>
           <button className="btn">Close</button>
@@ -128,3 +133,4 @@ const ModalContent: React.FC<ModalContentProps> = ({ product }) => {
 };
 
 export default ModalContent;
+

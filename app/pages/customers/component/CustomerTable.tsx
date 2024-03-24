@@ -3,7 +3,6 @@ import { CustomerProps } from "../page";
 
 const Table = ({ customers = [] }: { customers: CustomerProps[] }) => {
   return (
-    <div className="justify-center overflow-x-auto">
       <table className="table table-xl">
         <thead>
           <tr>
@@ -44,7 +43,6 @@ const Table = ({ customers = [] }: { customers: CustomerProps[] }) => {
           </tr>
         </tfoot>
       </table>
-    </div>
   );
 };
 

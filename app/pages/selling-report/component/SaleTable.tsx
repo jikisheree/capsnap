@@ -6,6 +6,22 @@ const SaleTable = ({
 }: {
   saleData: TableReportProps[] | null;
 }) => {
+  if (!saleData || saleData.length === 0) {
+    return (
+    <>
+    <div className="collapse collapse-plus card lg:card-side shadow-xl">
+      <input type="checkbox" className="peer" />
+      <div className="flex collapse-title">
+        <h2 className="text-center font-bold">Table</h2>
+      </div>
+      <div className="collapse-content">
+        <div> No data available this day</div>
+      </div>
+      </div>
+    </>
+    )
+  }
+  saleData?.sort((a, b) => b.total_received - a.total_received);
   console.log(saleData);
   return (
     <div className="collapse collapse-plus card lg:card-side shadow-xl">

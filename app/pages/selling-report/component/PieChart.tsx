@@ -11,6 +11,10 @@ interface PieChartProps {
 const PieChart: React.FC<PieChartProps> = ({ chartData }) => {
   console.log(chartData);
 
+  if (!chartData.series || chartData.series.length === 0) {
+    return <div>No data available this day</div>;
+  }
+
   const options = {
     plotOptions: {
       pie: {

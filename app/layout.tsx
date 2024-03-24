@@ -12,6 +12,9 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "CapSnap",
   description: "Stock & Selling Manager",
+  // icons: {
+  //   favicon: "tb/TbCaptureFilled"
+  // }
 };
 
 export default async function RootLayout({
