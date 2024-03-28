@@ -7,13 +7,17 @@ import TabList from "@mui/lab/TabList";
 import AdvanceEditTab from "./Tabs/AdvanceEditTab";
 import AccountEditTab from "./Tabs/AccountEditTab";
 import BasicEditTab from "./Tabs/BasicEditTab";
+import { useAppContext } from "@/app/context/supabase-context";
 
 interface EditAdminModalProps {
   admin: AdminProps;
 }
 
 const EditAdminModal: React.FC<EditAdminModalProps> = ({ admin }) => {
-  const [value, setValue] = React.useState("1");
+  const {user} = useAppContext();
+  const userId =  user?.id;
+  console.log(userId);
+  const [value, setValue] = React.useState(admin.admin_id === userId ? "1" : "3");
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
@@ -35,25 +39,23 @@ const EditAdminModal: React.FC<EditAdminModalProps> = ({ admin }) => {
 
       {/* Tabs */}
       <TabContext value={value}>
-        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-          <TabList
-            onChange={handleChange}
-            aria-label="Admin Update Tabs"
-            centered
-          >
-            <Tab label="Basic" value="1" />
-            <Tab label="Account" value="2" />
-            <Tab label="Advance" value="3" />
-          </TabList>
-        </Box>
+      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+        <TabList
+          onChange={handleChange}
+          aria-label="Admin Update Tabs"
+          centered
+        >
+          {admin.admin_id === userId && <Tab label="Basic" value="1" />}
+          {admin.admin_id === userId && <Tab label="Account" value="2" />}
+          <Tab label="Advance" value="3" />
+        </TabList>
+      </Box>
 
-        {/* Tab Panels */}
-        <BasicEditTab admin={admin} key={`ba-${admin.admin_id}`} />
-
-        <AccountEditTab admin={admin} key={`ac-${admin.admin_id}`} />
-
-        <AdvanceEditTab admin={admin} key={`ad-${admin.admin_id}`} />
-      </TabContext>
+      {/* Tab Panels */}
+      {admin.admin_id === userId && <BasicEditTab admin={admin} key={`ba-${admin.admin_id}`} />}
+      {admin.admin_id === userId && <AccountEditTab admin={admin} key={`ac-${admin.admin_id}`} />}
+      <AdvanceEditTab admin={admin} key={`ad-${admin.admin_id}`} />
+    </TabContext>
     </div>
   );
 };

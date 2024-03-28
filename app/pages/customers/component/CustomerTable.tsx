@@ -22,13 +22,9 @@ const Table = ({ customers = [] }: { customers: CustomerProps[] }) => {
               <td>{item.last_name}</td>
               <td>{item.email}</td>
               <td>
-                {new Date(item.birth_date).toLocaleString([], {
-                  year: "numeric",
-                  month: "numeric",
-                  day: "numeric",
-                })}
+                {new Date(item.birth_date).toDateString()}
               </td>
-              <td>{new Date(item.join_at).toLocaleString()}</td>
+              <td>{new Date(item.join_at).toDateString()}</td>
             </tr>
           ))}
         </tbody>

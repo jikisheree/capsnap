@@ -6,17 +6,6 @@ const StockHistoryTable = ({
 }: {
   history: StockHistoryProps[] | undefined;
 }) => {
-  const dateFormat = (date: string) => {
-    const dateObject = new Date(date);
-
-    // Format the date using toLocaleString
-    const formattedDateTime = dateObject.toLocaleString();
-
-    // Display the result
-    console.log("Formatted DateTime:", formattedDateTime);
-
-    return formattedDateTime;
-  };
 
   return (
     <ul className="timeline timeline-vertical">
@@ -26,7 +15,7 @@ const StockHistoryTable = ({
             {item.update_by}: {item.update_type === "Decrease" ? "-" : "+"}{" "}
             {item.unit}
           </div>
-          <div className="timeline-end">{dateFormat(item.update_at)}</div>
+          <div className="timeline-end">{new Date(item.update_at).toDateString()}</div>
           <div className="timeline-middle">
             <svg
               xmlns="http://www.w3.org/2000/svg"

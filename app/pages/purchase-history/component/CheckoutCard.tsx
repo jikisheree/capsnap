@@ -11,7 +11,7 @@ const CheckoutCard = ({ checkoutList = [] }: { checkoutList: any[] }) => {
     const dateB = new Date(b.checkout_at).getTime();
 
     // Compare dates for sorting
-    return dateA - dateB;
+    return dateB - dateA;
   });
   const [posts, setPosts] = useState(checkoutList);
   const supabase = createSupabaseBrowserClient();
@@ -70,7 +70,7 @@ const CheckoutCard = ({ checkoutList = [] }: { checkoutList: any[] }) => {
             <div className="flex-initial card-body ">
               <h2 className="card-title">Total: {item.total_amount} </h2>
               <h2 className="card-title">
-                Checkout at: {dateFormat(item.checkout_at)}{" "}
+                Checkout at: {new Date(item.checkout_at).toDateString()}{" "}
               </h2>
             </div>
           </div>

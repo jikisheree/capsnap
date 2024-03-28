@@ -12,11 +12,10 @@ const DeleteAdmin = ({ user_id }: { user_id: string }) => {
     startTransition(async () => {
       const result = JSON.parse(await deleteMemberById(user_id));
       if (result?.error?.message) {
-        console.log("Error deleteing admin: ", result.error.message);
+        alert(result.error.message);
       } else {
         console.log("Successfully deleteing admin: ");
       }
-      redirect("/pages/store-setting");
     });
   };
   return (
@@ -24,7 +23,7 @@ const DeleteAdmin = ({ user_id }: { user_id: string }) => {
       <button
         onClick={() => {
           const dialog = document.getElementById(
-            "confirmModal"
+            `cm-${user_id}`
           ) as HTMLDialogElement;
           dialog?.showModal();
         }}
@@ -32,7 +31,7 @@ const DeleteAdmin = ({ user_id }: { user_id: string }) => {
       >
         <AiFillDelete />
       </button>
-      <dialog id="confirmModal" className="modal modal-bottom sm:modal-middle">
+      <dialog id={`cm-${user_id}`} className="modal modal-bottom sm:modal-middle">
         <div className="modal-box">
           <h1 className="font-bold text-2xl mb-5">
             Are you sure you want to delete?

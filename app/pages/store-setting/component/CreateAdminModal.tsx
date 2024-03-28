@@ -89,19 +89,19 @@ const CreateAdminModal = () => {
           />
         </div>
         <div className="col-span-2">
-          <h2 className="font-bold">Role</h2>
-          <select
-            className="select select-sm select-primary w-full"
-            value={role}
-            onChange={(e) => setRole(e.target.value)}
-          >
-            <option disabled selected>
-              Choose role..
-            </option>
-            <option value={"Super Admin"}>Super Admin</option>
-            <option value={"Admin"}>Admin</option>
-          </select>
-        </div>
+  <h2 className="font-bold">Role</h2>
+  <select
+    className="select select-sm select-primary w-full"
+    value={role}
+    onChange={(e) => setRole(e.target.value)}
+  >
+    <option disabled value={""}>
+      Choose role...
+    </option>
+    <option value={"Super Admin"}>Super Admin</option>
+    <option value={"Admin"}>Admin</option>
+  </select>
+</div>
         <div className="col-span-2">
           <h2 className="font-bold">Password</h2>
           <input

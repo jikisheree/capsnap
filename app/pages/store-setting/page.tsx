@@ -4,10 +4,9 @@ import AdminTable from "@/app/pages/store-setting/component/AdminTable";
 import React from "react";
 import CreateAdminModal from "./component/CreateAdminModal";
 import { readMember, readStoreData } from "./actions";
-import { useUserStore } from "@/lib/store/user";
-import { useAppContext } from "@/app/context/supabase-context";
 import AddAdminButton from "./component/AddAdminButton";
 import StoreSetting from "./component/StoreSetting";
+import readUserSession from "@/lib/actions";
 
 export interface AdminProps {
   id: string;
@@ -33,10 +32,13 @@ export interface StoreProps {
 
 const Page = async () => {
   // const user = useUserStore.getState().user;
+  const {data: userSession} = await readUserSession();
+  // const isSuperAdmin = userSession.user?.user_metadata.role === "Super Admin";
+  console.log(userSession.user?.user_metadata.role);
   // const isSuperAdmin = user?.user_metadata.role === "Super Admin";
   // console.log(isSuperAdmin);
   // console.log(user);
-   const isSuperAdmin = true;
+  const isSuperAdmin = true;
 
   const { data: admins, error } = await readMember();
   if (error) window.alert("Error fetching admin data: " + error);
