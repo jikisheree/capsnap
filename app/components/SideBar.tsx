@@ -12,6 +12,7 @@ import {
 } from "react-icons/ai";
 import { useAppContext } from "../context/supabase-context";
 import Link from "next/link";
+import { createSupabaseBrowserClient } from "@/lib/supabase/supabase-browser";
 
 export interface MenuProps {
   icon: any;
@@ -86,14 +87,14 @@ export default function SideBar({ children }: { children: React.ReactNode }) {
             {/* Sidebar content here */}
             <li>
               <Link className="text-2xl font-bold" href="/home">
-                Prototype Shop
+                CapSnap
               </Link>
             </li>
             <li className="flex">
               <div className="flex">
                 <div className="flex-auto avatar placeholder">
                   <div className="bg-neutral text-neutral-content rounded-full w-12">
-                    <span className="text-3xl">
+                    <span className="text-3xl pb-2">
                       {user?.user_metadata.first_name
                         ? user.user_metadata.first_name[0]
                         : undefined}

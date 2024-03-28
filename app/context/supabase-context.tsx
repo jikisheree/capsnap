@@ -58,7 +58,7 @@ export function AppWrapper({ children }: { children: React.ReactNode }) {
     }
   };
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <h1>Loading...</h1>;
 
   // Check if the current path is '/'
   const isHomePage = ["/", "/auth/signin", "/auth/signup"].includes(pathname);

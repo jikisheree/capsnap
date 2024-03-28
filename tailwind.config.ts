@@ -15,9 +15,9 @@ const config: Config = {
       },
     },
   },
-  plugins: [require("daisyui"),], 
+  plugins: [require("daisyui"),],
   daisyui: {
-    themes: ["retro", "coffee","authumn","bumblebee","cupcake", "pastel", "nord"],
+    themes: ["nord"],
   },
 }
 export default config

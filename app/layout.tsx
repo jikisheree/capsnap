@@ -3,9 +3,6 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { AppWrapper } from "./context/supabase-context";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
-import readUserSession from "@/lib/actions";
-import { redirect } from "next/navigation";
-import { useUserStore } from "@/lib/store/user";
 
 const inter = Inter({ subsets: ["latin"] });
 
