@@ -1,6 +1,5 @@
 import React from "react";
 import CateCard from "@/app/pages/stock-manager/component/CateCard";
-import { useUserStore } from "@/lib/store/user";
 import AddCategory from "./component/AddCategory";
 import AddCategoryButton from "./component/AddCategoryButton";
 import { createSupabaseServerClient } from "@/lib/supabase/supabase-server";
@@ -17,8 +16,6 @@ export interface CateProps {
 
 export default async function () {
   const supabase = createSupabaseServerClient();
-  const user = useUserStore.getState().user;
-  console.log(user);
 
   const { data: cateData } = await supabase.from("category").select();
   const { data: prodDdata } = await supabase.from("product").select();
