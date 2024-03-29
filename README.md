@@ -1,6 +1,6 @@
 # CapSnap
 ## CapSnap: Retail Self-checkout System using Computational Intelligence Techniques (261492 Final ProjectCapSnap)
-## This is the source code of our website application for store selling management, which is a part our CapSnap project.
+This is the source code of our website application for store selling management, which is a part our CapSnap project.
 
 Majority of Computer Engineering, Faculty of Engineering @ Chiang Mai University 
 
