@@ -1,3 +1,16 @@
+# CapSnap
+## CapSnap: Retail Self-checkout System using Computational Intelligence Techniques (261492 Final ProjectCapSnap)
+## This is the source code of our website application for store selling management, which is a part our CapSnap project.
+
+Majority of Computer Engineering, Faculty of Engineering @ Chiang Mai University 
+
+By Pongsakorn Rattanapan 630610749 & 
+   Suparida Silpasith 630610765
+
+   Section: 042
+
+Professor: Sansanee Auephanwiriyakul
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
@@ -30,7 +43,7 @@ NEXT_PUBLIC_SUPABASE_URL=<your_supabase_url>
 NEXT_PUBLIC_SUPABASE_ANON_KEY=<your_supabase_anon_key>
 
 Replace <your_supabase_url> and <your_supabase_anon_key> with your actual Supabase URL and anonymous key. You can find these credentials in your Supabase project settings.
-# If you want to connect to our Supabase database instance, please contact us via capsnap.cpe@gmail.com
+## If you want to connect to our Supabase database instance, please contact us via capsnap.cpe@gmail.com
 
 ## Learn More
 
