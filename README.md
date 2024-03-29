@@ -20,6 +20,18 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
+## Setting up Supabase
+To connect to the Supabase database, you need to set up a .env.local file in the root of your project and provide the Supabase URL and anonymous key. Here's how you can do it:
+
+Create a .env.local file in the root directory of your project.
+Add the following environment variables to the .env.local file:
+
+NEXT_PUBLIC_SUPABASE_URL=<your_supabase_url>
+NEXT_PUBLIC_SUPABASE_ANON_KEY=<your_supabase_anon_key>
+
+Replace <your_supabase_url> and <your_supabase_anon_key> with your actual Supabase URL and anonymous key. You can find these credentials in your Supabase project settings.
+# If you want to connect to our Supabase database instance, please contact us via capsnap.cpe@gmail.com
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
