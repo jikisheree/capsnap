@@ -25,7 +25,7 @@ const AddProduct = ({ category_id }: { category_id: number }) => {
             description: formData.get("description") as string,
             stock: parseInt(formData.get("stock") as string),
             price: parseInt(formData.get("price") as string),
-            image_path: formData.get("img_path") as string,
+            image_path: formData.get("image_path") as string,
           })
         );
 
@@ -80,7 +80,7 @@ const AddProduct = ({ category_id }: { category_id: number }) => {
           ></textarea>
           <h2 className="font-bold">Price: </h2>
           <input
-            type="text"
+            type="number"
             placeholder="price"
             name="price"
             className="input input-bordered input-primary w-full max-w-xs col-span-2"
@@ -88,7 +88,7 @@ const AddProduct = ({ category_id }: { category_id: number }) => {
           <h2 className="font-bold">Stock: </h2>
           <div className="col-span-2">
             <input
-              type="text"
+              type="number"
               placeholder="stock"
               name="stock"
               className="input input-bordered input-primary w-full max-w-xs"

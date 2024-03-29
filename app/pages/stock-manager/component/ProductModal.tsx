@@ -86,7 +86,7 @@ const ModalContent: React.FC<ModalContentProps> = ({ product }) => {
         ></textarea>
         <h2 className="font-bold">Price: </h2>
         <input
-          type="text"
+          type="number"
           value={price}
           onChange={(e) => {
             setPrice(parseInt(e.target.value, 10));
@@ -110,7 +110,7 @@ const ModalContent: React.FC<ModalContentProps> = ({ product }) => {
             <option value={"Decrease"}>Decrease</option>
           </select>
           <input
-            type="text"
+            type="number"
             placeholder={"update unit"}
             onChange={(e) => {
               setStock(parseInt(e.target.value, 10));

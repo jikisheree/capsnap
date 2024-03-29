@@ -56,27 +56,30 @@ const StoreSetting = ({ data }: { data: StoreProps }) => {
             <input type="checkbox" className="toggle toggle-primary" />
           </label>
         </div>
+        <h2 className="mt-7  font-bold">Store Name</h2>
         <input
           name="name"
           type="text"
           value={name}
           onChange={(event) => handleChangeName(event)}
-          className="mt-7 input input-bordered input-primary w-full max-w-xs"
+          className="input input-bordered input-primary w-full max-w-xs"
         />
+        <h2 className="mt-5 font-bold">Location</h2>
         <input
           // import location api
           name="location"
           type="text"
           value={location}
           onChange={(event) => handleChangeLocation(event)}
-          className="mt-5 input input-bordered input-primary w-full max-w-xs"
+          className="input input-bordered input-primary w-full max-w-xs"
         />
+        <h2 className="mt-5 font-bold">Category</h2>
         <input
           type="text"
           name="category"
           value={category}
           onChange={(event) => handleChangeCategory(event)}
-          className="mt-5 input input-bordered input-primary w-full max-w-xs"
+          className="input input-bordered input-primary w-full max-w-xs"
         />
         <button type="submit" className="btn mr-5 flex m-5">
           {isPending && (

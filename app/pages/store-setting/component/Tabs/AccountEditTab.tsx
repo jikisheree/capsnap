@@ -38,7 +38,7 @@ const AccountEditTab = ({ admin }: { admin: AdminProps }) => {
       );
 
       if (error) {
-        console.error("Cannot update account info.", error);
+        window.alert("Cannot update account info:"+ error);
       } else {
         console.log("Successfully Updates Account info!");
         // window.location.reload();

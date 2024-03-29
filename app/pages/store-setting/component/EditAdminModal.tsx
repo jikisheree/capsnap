@@ -16,7 +16,10 @@ interface EditAdminModalProps {
 
 const EditAdminModal: React.FC<EditAdminModalProps> = ({ admin }) => {
   const {user} = useAppContext();
+  const isSuperAdmin = user?.user_metadata.role === "Super Admin";
   const userId =  user?.id;
+  console.log("lll");
+  console.log(user?.user_metadata.role);
   console.log(userId);
   const [value, setValue] = React.useState("1");
 
@@ -49,14 +52,14 @@ const EditAdminModal: React.FC<EditAdminModalProps> = ({ admin }) => {
         >
           <Tab label="Basic" value="1" />
           <Tab label="Account" value="2" />
-          <Tab label="Advance" value="3" />
+          {isSuperAdmin && <Tab label="Advance" value="3" />}
         </TabList>
       </Box>
 
       {/* Tab Panels */}
       <BasicEditTab admin={admin} key={`ba-${admin.admin_id}`} />
       <AccountEditTab admin={admin} key={`ac-${admin.admin_id}`} />
-      <AdvanceEditTab admin={admin} key={`ad-${admin.admin_id}`} />
+      {isSuperAdmin && <AdvanceEditTab admin={admin} key={`ad-${admin.admin_id}`} />}
     </TabContext>) : (
       <AdvanceEditTab2 admin={admin} key={`ad-${admin.admin_id}`} />
     )}

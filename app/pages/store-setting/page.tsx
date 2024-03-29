@@ -31,14 +31,9 @@ export interface StoreProps {
 }
 
 const Page = async () => {
-  // const user = useUserStore.getState().user;
   const {data: userSession} = await readUserSession();
-  // const isSuperAdmin = userSession.user?.user_metadata.role === "Super Admin";
+  const isSuperAdmin = userSession.user?.user_metadata.role === "Super Admin";
   console.log(userSession.user?.user_metadata.role);
-  // const isSuperAdmin = user?.user_metadata.role === "Super Admin";
-  // console.log(isSuperAdmin);
-  // console.log(user);
-  const isSuperAdmin = true;
 
   const { data: admins, error } = await readMember();
   if (error) window.alert("Error fetching admin data: " + error);

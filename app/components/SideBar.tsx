@@ -95,15 +95,14 @@ export default function SideBar({ children }: { children: React.ReactNode }) {
                 <div className="flex-auto avatar placeholder">
                   <div className="bg-neutral text-neutral-content rounded-full w-12">
                     <span className="text-3xl pb-2">
-                      {user?.user_metadata.first_name
-                        ? user.user_metadata.first_name[0]
+                      {user?.user_metadata.username
+                        ? user.user_metadata.username[0]
                         : undefined}
                     </span>
                   </div>
                 </div>
                 <h1 className="flex-auto text-center text-xl">
-                  {user?.user_metadata.first_name}{" "}
-                  {user?.user_metadata.last_name}
+                  {user?.user_metadata.username}
                 </h1>
               </div>
             </li>

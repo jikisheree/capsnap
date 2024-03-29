@@ -8,10 +8,10 @@ export async function createMember(data: { email: string; password: string; firs
 
     const { data: userSession } = await readUserSession();
 
-    // if(userSession.user?.user_metadata.role !== "Super Admin"){
-    //     console.log(userSession.user?.user_metadata.role);
-    //     return JSON.stringify({error:{message: "You are not allowed to take this action."}});
-    // }
+    if (userSession.user?.user_metadata.role !== "Super Admin") {
+        console.log(userSession.user?.user_metadata.role);
+        return JSON.stringify({ error: { message: "You are not allowed to take this action." } });
+    }
 
     const supabase = await createSupabaseAdmin()
     // create account
@@ -57,9 +57,9 @@ export async function deleteMemberById(user_id: string) {
     // admin only
     const { data: userSession } = await readUserSession();
 
-    // if (userSession.user?.user_metadata.role !== "Super Admin") {
-    //     return JSON.stringify({ error: { message: "You are not allowed to take this action." } });
-    // }
+    if (userSession.user?.user_metadata.role !== "Super Admin") {
+        return JSON.stringify({ error: { message: "You are not allowed to take this action." } });
+    }
 
     const supabaseAdmin = await createSupabaseAdmin()
 
@@ -75,27 +75,22 @@ export async function deleteMemberById(user_id: string) {
 
 export async function updateMemberBasicById(user_id: string, data: { first_name: string; last_name: string; }) {
 
-    // admin only
-    // const {data: userSession} = await readUserSession();
+    const supabaseAdmin = await createSupabaseAdmin()
+    const updateResult = await supabaseAdmin.auth.admin.updateUserById(user_id, {
+        user_metadata: data
+    });
 
-    // if(userSession.user?.user_metadata.role !== "super admin"){
-    //     return JSON.stringify({error:{message: "You are not allowed to take this action."}});
-    // }
-
-    const supabase = await createSupabaseServerClient();
-    const result = await supabase.from("admin").update(data).eq("id", user_id);
-    return JSON.stringify(result);
+    if (updateResult.error?.message) { return JSON.stringify(updateResult) }
+    else {
+        const supabase = await createSupabaseServerClient();
+        const result = await supabase.from("admin").update(data).eq("id", user_id);
+        return JSON.stringify(result);
+    }
 
 }
 
 export async function updateMemberAccountById(user_id: string, data: { username: string; email: string; password: string | undefined; }) {
 
-    // admin only
-    // const {data: userSession} = await readUserSession();
-
-    // if(userSession.user?.user_metadata.role !== "super admin"){
-    //     return JSON.stringify({error:{message: "You are not allowed to take this action."}});
-    // }
 
     let updateObject: { username: string; email: string; password?: string | undefined; } = { username: data.username, email: data.email };
 
@@ -106,23 +101,23 @@ export async function updateMemberAccountById(user_id: string, data: { username:
     const supabaseAdmin = await createSupabaseAdmin()
     const updateResult = await supabaseAdmin.auth.admin.updateUserById(user_id, updateObject);
 
-    if (updateResult.error?.message) { return JSON.stringify(updateResult) } else {
+    if (updateResult.error?.message) { return JSON.stringify(updateResult) }
+    else {
         const supabase = await createSupabaseServerClient();
         const result = await supabase.from("admin").update({ username: data.username, email: data.email }).eq("id", user_id);
         return JSON.stringify(result);
     }
-
 
 }
 
 export async function updateMemberAdvanceById(permission_id: string, user_id: string, data: { role: "Admin" | "Super Admin", status: "Active" | "Resigned" }) {
 
     // admin only
-    // const {data: userSession} = await readUserSession();
+    const { data: userSession } = await readUserSession();
 
-    // if(userSession.user?.user_metadata.role !== "super admin"){
-    //     return JSON.stringify({error:{message: "You are not allowed to take this action."}});
-    // }
+    if (userSession.user?.user_metadata.role !== "Super Admin") {
+        return JSON.stringify({ error: { message: "You are not allowed to take this action." } });
+    }
 
     console.log("Advance", data.role);
 

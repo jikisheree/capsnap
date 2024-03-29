@@ -30,7 +30,7 @@ const AdvanceEditTab = ({ admin }: { admin: AdminProps }) => {
       );
 
       if (error) {
-        console.error("Cannot update advance info.", error);
+         window.alert("Cannot update account info:"+ error);
       } else {
         console.log("Successfully Updates Advnace info!");
         // window.location.reload();
